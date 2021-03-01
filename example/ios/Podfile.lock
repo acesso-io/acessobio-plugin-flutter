@@ -1,0 +1,34 @@
+PODS:
+  - AcessoBio (1.2.1)
+  - acessobio_plugin (0.0.1):
+    - AcessoBio
+    - Flutter
+  - Flutter (1.0.0)
+
+DEPENDENCIES:
+  - AcessoBio (from `https://github.com/acesso-io/acessobio-ios`, tag `1.2.1`)
+  - acessobio_plugin (from `.symlinks/plugins/acessobio_plugin/ios`)
+  - Flutter (from `Flutter`)
+
+EXTERNAL SOURCES:
+  AcessoBio:
+    :git: https://github.com/acesso-io/acessobio-ios
+    :tag: 1.2.1
+  acessobio_plugin:
+    :path: ".symlinks/plugins/acessobio_plugin/ios"
+  Flutter:
+    :path: Flutter
+
+CHECKOUT OPTIONS:
+  AcessoBio:
+    :git: https://github.com/acesso-io/acessobio-ios
+    :tag: 1.2.1
+
+SPEC CHECKSUMS:
+  AcessoBio: 4b9140b89015b4f57dee1fe217601f6c08e0b671
+  acessobio_plugin: aeb47f0315ef5066d610570a5009e62d928ea5f8
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+
+PODFILE CHECKSUM: b78bd3444665e506d5b207b8548ba909b966de2c
+
+COCOAPODS: 1.10.0
