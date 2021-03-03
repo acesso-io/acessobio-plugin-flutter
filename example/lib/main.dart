@@ -32,6 +32,7 @@ class _MyAppState extends State<MyApp> implements IAcessoBioCamera, IAcessoBioDo
   }
 
   Future<void> initPlatformState() async {
+
     String platformVersion = "Esta biblioteca visa implementar a tecnologia Unico";
 
     //Inicialmente, para utilizar a tecnologia implemente a classe Acessobio.
@@ -62,9 +63,10 @@ class _MyAppState extends State<MyApp> implements IAcessoBioCamera, IAcessoBioDo
         acessoPass.token
     );
 
+
     //  --- LIVENESS ---
     acessobioLiveness.openLiveness;
-    // acessobioLiveness.openLivenessWithCreateProcess("lucas diniz","10642352984");
+    // acessobioLiveness.openLivenessWithCreateProcess("lucas diniz","12345678909");
 
 
     //  --- DOCUMENT ---
@@ -74,13 +76,13 @@ class _MyAppState extends State<MyApp> implements IAcessoBioCamera, IAcessoBioDo
 
 
     //  --- AUTH ---
-    // acessobioAuth.openLivenessAuthenticate("10642352984");
+    // acessobioAuth.openLivenessAuthenticate("12345678909");
 
 
     //  --- CAMERA ---
     // acessobioCamera.openCamera;
-    // acessobioCamera.openCameraWithCreateProcess("lucas", "123321123",null,null,null,null);
-    // acessobioCamera.openCameraWithCreateProcessAndInsertDocument("10642352984", "Lucas Diniz", AcessobioPlugin.CNH);// no IOS ainda nao foi inplementado // retornando na interface errada
+    // acessobioCamera.openCameraWithCreateProcess("lucas", "12345678909",null,null,null,null);
+    // acessobioCamera.openCameraWithCreateProcessAndInsertDocument("12345678909", "Lucas Diniz", AcessobioPlugin.CNH);// no IOS ainda nao foi inplementado // retornando na interface errada
 
 
     if (!mounted) return;
