@@ -12,7 +12,7 @@ import 'ResultCameraDocument.dart';
 import 'ResultFacematch.dart';
 import 'ResultLivenessX.dart';
 
-class AcessobioPlugin {
+class AcessoBio {
 
   static const MethodChannel _channel = const MethodChannel('acessobio');
 
@@ -29,7 +29,7 @@ class AcessobioPlugin {
   IAcessoBioLiveness iAcessoBioLiveness;
   IAcessoBioAuthenticate iAcessoBioAuthenticate;
 
-  AcessobioPlugin.iAcessoBioCamera(String urlIntance, String apikey, String authToken, IAcessoBioCamera iAcessoBioCamera){
+  AcessoBio.iAcessoBioCamera(IAcessoBioCamera iAcessoBioCamera, String urlIntance, String apikey, String authToken){
 
     this.iAcessoBioCamera = iAcessoBioCamera;
 
@@ -37,7 +37,8 @@ class AcessobioPlugin {
     _apikey = apikey;
     _authToken = authToken;
   }
-  AcessobioPlugin.iAcessoBioDocument(String urlIntance, String apikey, String authToken,  IAcessoBioDocument iAcessoBioDocument){
+
+  AcessoBio.iAcessoBioDocument(IAcessoBioDocument iAcessoBioDocument, String urlIntance, String apikey, String authToken){
 
     this.iAcessoBioDocument = iAcessoBioDocument;
 
@@ -46,7 +47,8 @@ class AcessobioPlugin {
     _authToken = authToken;
 
   }
-  AcessobioPlugin.iAcessoBioLiveness(String urlIntance, String apikey, String authToken, IAcessoBioLiveness iAcessoBioLiveness){
+
+  AcessoBio.iAcessoBioLiveness(IAcessoBioLiveness iAcessoBioLiveness, String urlIntance, String apikey, String authToken){
 
     this.iAcessoBioLiveness = iAcessoBioLiveness;
 
@@ -54,7 +56,8 @@ class AcessobioPlugin {
     _apikey = apikey;
     _authToken = authToken;
   }
-  AcessobioPlugin.iAcessoBioAuthenticate(String urlIntance, String apikey, String authToken, IAcessoBioAuthenticate iAcessoBioAuthenticate){
+
+  AcessoBio.iAcessoBioAuthenticate(IAcessoBioAuthenticate iAcessoBioAuthenticate, String urlIntance, String apikey, String authToken){
 
     this.iAcessoBioAuthenticate = iAcessoBioAuthenticate;
 

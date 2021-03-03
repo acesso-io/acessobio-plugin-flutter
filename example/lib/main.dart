@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:acessobio_plugin/OCRResponse.dart';
 import 'package:acessobio_plugin/ResultAuthenticate.dart';
 import 'package:acessobio_plugin/ResultCamera.dart';
@@ -5,8 +6,6 @@ import 'package:acessobio_plugin/ResultLivenessX.dart';
 import 'package:acessobio_plugin/ResultCameraDocument.dart';
 import 'package:acessobio_plugin/ResultFacematch.dart';
 import 'package:acessobio_plugin_example/acessoPass.dart';
-import 'package:flutter/material.dart';
-import 'dart:async';
 import 'package:acessobio_plugin/IAcessoBioAuthenticate.dart';
 import 'package:acessobio_plugin/IAcessoBioCamera.dart';
 import 'package:acessobio_plugin/IAcessoBioDocument.dart';
@@ -24,9 +23,8 @@ class MyApp extends StatefulWidget  {
 }
 
 class _MyAppState extends State<MyApp> implements IAcessoBioCamera, IAcessoBioDocument, IAcessoBioLiveness, IAcessoBioAuthenticate {
+
   String _platformVersion;
-  // bool _platformVersion;
-  // Map<dynamic, dynamic> platformVersion;
 
   @override
   void initState() {
@@ -34,39 +32,58 @@ class _MyAppState extends State<MyApp> implements IAcessoBioCamera, IAcessoBioDo
   }
 
   Future<void> initPlatformState() async {
+    String platformVersion = "Esta biblioteca visa implementar a tecnologia Unico";
 
-    // String platformVersion;
-    // bool platformVersion;
-    Map<dynamic, dynamic> platformVersion;
+    //Inicialmente, para utilizar a tecnologia implemente a classe Acessobio.
+    //Implementar construtor de acordo com a tecnologia que ira utilizar
 
-
-    AcessobioPlugin acessobioPlugin = new AcessobioPlugin.iAcessoBioCamera(
+    AcessoBio acessobioLiveness = new AcessoBio.iAcessoBioLiveness(
+        this,
         acessoPass.url,
         acessoPass.apikey,
-        acessoPass.token,
-      this
+        acessoPass.token
+    );
+    AcessoBio acessobioDocument = new AcessoBio.iAcessoBioDocument(
+        this,
+        acessoPass.url,
+        acessoPass.apikey,
+        acessoPass.token
+    );
+    AcessoBio acessobioAuth = new AcessoBio.iAcessoBioAuthenticate(
+        this,
+        acessoPass.url,
+        acessoPass.apikey,
+        acessoPass.token
+    );
+    AcessoBio acessobioCamera = new AcessoBio.iAcessoBioCamera(
+        this,
+        acessoPass.url,
+        acessoPass.apikey,
+        acessoPass.token
     );
 
     //  --- LIVENESS ---
-    // acessobioPlugin.openLiveness;
-    // acessobioPlugin.openLivenessWithCreateProcess("lucas diniz","10642352984");
+    acessobioLiveness.openLiveness;
+    // acessobioLiveness.openLivenessWithCreateProcess("lucas diniz","10642352984");
+
 
     //  --- DOCUMENT ---
-    // acessobioPlugin.openCameraDocumentOCR(AcessobioPlugin.CNH);
-    // acessobioPlugin.openFaceMatch(AcessobioPlugin.CNH);
-    // acessobioPlugin.openCameraDocument(AcessobioPlugin.CNH);
+    // acessobioDocument.openCameraDocumentOCR(AcessobioPlugin.CNH);
+    // acessobioDocument.openFaceMatch(AcessobioPlugin.CNH);
+    // acessobioDocument.openCameraDocument(AcessobioPlugin.CNH);
 
 
     //  --- AUTH ---
-    // acessobioPlugin.openLivenessAuthenticate("10642352984");
+    // acessobioAuth.openLivenessAuthenticate("10642352984");
+
 
     //  --- CAMERA ---
-    // acessobioPlugin.openCamera;
-    // acessobioPlugin.openCameraWithCreateProcess("lucas", "123321123",null,null,null,null);
-    // acessobioPlugin.openCameraWithCreateProcessAndInsertDocument("10642352984", "Lucas Diniz", AcessobioPlugin.CNH);// no IOS ainda nao foi inplementado // retornando na interface errada
+    // acessobioCamera.openCamera;
+    // acessobioCamera.openCameraWithCreateProcess("lucas", "123321123",null,null,null,null);
+    // acessobioCamera.openCameraWithCreateProcessAndInsertDocument("10642352984", "Lucas Diniz", AcessobioPlugin.CNH);// no IOS ainda nao foi inplementado // retornando na interface errada
+
 
     if (!mounted) return;
-
   }
 
   @override
@@ -74,7 +91,7 @@ class _MyAppState extends State<MyApp> implements IAcessoBioCamera, IAcessoBioDo
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('Plugin example app unico'),
         ),
         body: Center(
           child: Text('Running on: $_platformVersion\n'),
@@ -155,7 +172,7 @@ class _MyAppState extends State<MyApp> implements IAcessoBioCamera, IAcessoBioDo
 
   @override
   void onSuccessFaceMatch(ResultFacematch result) {
-   print("call onSuccessFaceMatch");
+    // TODO: implement onSucessDocumentInsert
   }
 
 
