@@ -1,15 +1,15 @@
 # acessobio_plugin
 
-A new Flutter plugin.
+A new AcessoBio Flutter plugin.
 
 ## Getting Started
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+#IOS 
+1 - Adicionar Versão 9 ou superior
+2 - Adicione:  pod ‘AcessoBio’, :git => ‘https://github.com/acesso-io/acessobio-ios’, :tag => ‘1.2.1.1’ no podfile do projeto IOS execute comando pod install
+3 - Adicionar #import <AcessoBioManager.h> no arquivo Runner-Bridging-Header.h
+4 - No arquivo acessobio_plugin-umbrella.h adicione @import AcessoBio; (path: YOUR_PROJECT/example/ios/Pods/Target Support Files/acessobio_plugin/acessobio_plugin-umbrella.h
+5 - no target menbership definir centerModelCrop como publico 
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
+#Android 
+1 - Adicionar minSdkVersion : 21
