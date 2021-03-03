@@ -103,7 +103,7 @@ class AcessobioPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
 
   private fun openCameraInsertDocument(method: String, code: String?, nome: String?, DOCUMENT_TYPE: Int?) {
 
-    val intent = getIntent(AcessoBioDocument(),method)
+    val intent = getIntent(AcessoBioCamera(),method)
 
     intent.putExtra("code", code)
     intent.putExtra("nome", nome)
@@ -233,7 +233,7 @@ class AcessobioPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
 
     }
 
-    hashMap["status"] = status
+    hashMap["flutterstatus"] = status
 
     return hashMap
 
@@ -243,7 +243,7 @@ class AcessobioPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     val hashMap:HashMap<String,Any> = HashMap()
 
     hashMap["result"] = result
-    hashMap["status"] = status
+    hashMap["flutterstatus"] = status
 
     return hashMap
 
@@ -253,7 +253,7 @@ class AcessobioPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     val hashMap:HashMap<String,Any> = HashMap()
 
     hashMap["result"] = result
-    hashMap["status"] = status
+    hashMap["flutterstatus"] = status
 
     return hashMap
 
@@ -263,7 +263,7 @@ class AcessobioPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     val hashMap:HashMap<String,Any> = HashMap()
 
     hashMap["result"] = result
-    hashMap["status"] = status
+    hashMap["flutterstatus"] = status
 
     return hashMap
 

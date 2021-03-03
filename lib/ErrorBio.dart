@@ -2,7 +2,7 @@
 
 class ErrorBio {
 
-  String code = null;
+  int code = null;
   String method = null;
   String description = null;
 

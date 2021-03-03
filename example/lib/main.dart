@@ -3,17 +3,16 @@ import 'package:acessobio_plugin/ResultAuthenticate.dart';
 import 'package:acessobio_plugin/ResultCamera.dart';
 import 'package:acessobio_plugin/ResultLivenessX.dart';
 import 'package:acessobio_plugin/ResultCameraDocument.dart';
+import 'package:acessobio_plugin/ResultFacematch.dart';
 import 'package:acessobio_plugin_example/acessoPass.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:flutter/services.dart';
 import 'package:acessobio_plugin/IAcessoBioAuthenticate.dart';
 import 'package:acessobio_plugin/IAcessoBioCamera.dart';
 import 'package:acessobio_plugin/IAcessoBioDocument.dart';
 import 'package:acessobio_plugin/IAcessoBioLiveness.dart';
 import 'package:acessobio_plugin/acessobio_plugin.dart';
 import 'package:acessobio_plugin/ErrorBio.dart';
-
 
 void main() {
   runApp(MyApp());
@@ -22,9 +21,7 @@ void main() {
 class MyApp extends StatefulWidget  {
   @override
   _MyAppState createState() => _MyAppState();
-
 }
-
 
 class _MyAppState extends State<MyApp> implements IAcessoBioCamera, IAcessoBioDocument, IAcessoBioLiveness, IAcessoBioAuthenticate {
   String _platformVersion;
@@ -50,26 +47,23 @@ class _MyAppState extends State<MyApp> implements IAcessoBioCamera, IAcessoBioDo
       this
     );
 
+    //  --- LIVENESS ---
+    // acessobioPlugin.openLiveness;
+    // acessobioPlugin.openLivenessWithCreateProcess("lucas diniz","10642352984");
 
-    try {
-
-      // acessobioPlugin.openLiveness;
-      // acessobioPlugin.openLivenessWithCreateProcess("nome","1234567");
-      // acessobioPlugin.openCameraDocumentOCR(AcessobioPlugin.CNH); // No IOS nao retorna resultado tela fica congelada no documento
-      // acessobioPlugin.openFaceMatch(AcessobioPlugin.CNH); // padronizar o result em um objeto ios e android (objeto estava retornando onSuccess errado)
-      // acessobioPlugin.openCameraDocument(AcessobioPlugin.CNH);
-
-      // acessobioPlugin.openCameraWithCreateProcessAndInsertDocument(" code ", " name ", AcessobioPlugin.CNH);// no IOS ainda nao foi inplementado
-
-      // acessobioPlugin.openLivenessAuthenticate("10642352984");
-
-      // acessobioPlugin.openCamera;
-      acessobioPlugin.openCameraWithCreateProcess("lucas", "123321123",null,null,null,null);
+    //  --- DOCUMENT ---
+    // acessobioPlugin.openCameraDocumentOCR(AcessobioPlugin.CNH);
+    // acessobioPlugin.openFaceMatch(AcessobioPlugin.CNH);
+    // acessobioPlugin.openCameraDocument(AcessobioPlugin.CNH);
 
 
-    } on PlatformException {
-      //platformVersion = 'Failed to get platform version.';
-    }
+    //  --- AUTH ---
+    // acessobioPlugin.openLivenessAuthenticate("10642352984");
+
+    //  --- CAMERA ---
+    // acessobioPlugin.openCamera;
+    // acessobioPlugin.openCameraWithCreateProcess("lucas", "123321123",null,null,null,null);
+    // acessobioPlugin.openCameraWithCreateProcessAndInsertDocument("10642352984", "Lucas Diniz", AcessobioPlugin.CNH);// no IOS ainda nao foi inplementado // retornando na interface errada
 
     if (!mounted) return;
 
@@ -93,8 +87,6 @@ class _MyAppState extends State<MyApp> implements IAcessoBioCamera, IAcessoBioDo
       ),
     );
   }
-
-
 
   @override
   void onErrorAuthenticate(ErrorBio errorBio) {
@@ -162,16 +154,9 @@ class _MyAppState extends State<MyApp> implements IAcessoBioCamera, IAcessoBioDo
   }
 
   @override
-  void onSucessFaceMatch(bool status) {
-    // TODO: implement onSucessFaceMatch
+  void onSuccessFaceMatch(ResultFacematch result) {
+   print("call onSuccessFaceMatch");
   }
-
-
-
-
-
-
-
 
 
 }

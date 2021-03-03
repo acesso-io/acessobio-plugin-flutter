@@ -9,9 +9,10 @@ import 'ResultCamera.dart';
 import 'ResultAuthenticate.dart';
 import 'OCRResponse.dart';
 import 'ResultCameraDocument.dart';
+import 'ResultFacematch.dart';
 import 'ResultLivenessX.dart';
 
- class AcessobioPlugin {
+class AcessobioPlugin {
 
   static const MethodChannel _channel = const MethodChannel('acessobio');
 
@@ -36,14 +37,14 @@ import 'ResultLivenessX.dart';
     _apikey = apikey;
     _authToken = authToken;
   }
-
-  AcessobioPlugin.iAcessoBioDocument(String urlIntance, String apikey, String authToken, IAcessoBioDocument iAcessoBioDocument){
+  AcessobioPlugin.iAcessoBioDocument(String urlIntance, String apikey, String authToken,  IAcessoBioDocument iAcessoBioDocument){
 
     this.iAcessoBioDocument = iAcessoBioDocument;
 
     _urlIntance = urlIntance;
     _apikey = apikey;
     _authToken = authToken;
+
   }
   AcessobioPlugin.iAcessoBioLiveness(String urlIntance, String apikey, String authToken, IAcessoBioLiveness iAcessoBioLiveness){
 
@@ -70,12 +71,12 @@ import 'ResultLivenessX.dart';
       "authToken":_authToken
     });
 
-    if(result["status"]){
-      result.remove("status");
+    if(result["flutterstatus"]){
+      result.remove("flutterstatus");
       iAcessoBioLiveness.onSuccessLiveness(ResultLivenessX(result));
 
     }else{
-      result.remove("status");
+      result.remove("flutterstatus");
       iAcessoBioLiveness.onErrorLiveness(ErrorBio(result));
     }
 
@@ -90,12 +91,12 @@ import 'ResultLivenessX.dart';
       "document":document
     });
 
-    if(result["status"]){
-      result.remove("status");
+    if(result["flutterstatus"]){
+      result.remove("flutterstatus");
       iAcessoBioLiveness.onSuccessLiveness(ResultLivenessX(result));
 
     }else{
-      result.remove("status");
+      result.remove("flutterstatus");
       iAcessoBioLiveness.onErrorLiveness(ErrorBio(result));
     }
 
@@ -112,12 +113,12 @@ import 'ResultLivenessX.dart';
       "DOCUMENT_TYPE":DOCUMENT_TYPE
     });
 
-    if(result["status"]){
-      result.remove("status");
+    if(result["flutterstatus"]){
+      result.remove("flutterstatus");
       iAcessoBioDocument.onSuccessOCR(OCRResponse(result));
 
     }else{
-      result.remove("status");
+      result.remove("flutterstatus");
       iAcessoBioDocument.onErrorOCR(result["result"]);
     }
 
@@ -131,12 +132,11 @@ import 'ResultLivenessX.dart';
       "DOCUMENT_TYPE":DOCUMENT_TYPE
     });
 
-    if(result["status"]){
-      result.remove("status");
-      iAcessoBioDocument.onSucessFaceMatch(result["result"]);
-
+    if(result["flutterstatus"]){
+      result.remove("flutterstatus");
+      iAcessoBioDocument.onSuccessFaceMatch(ResultFacematch(result));
     }else{
-      result.remove("status");
+      result.remove("flutterstatus");
       iAcessoBioDocument.onErrorFaceMatch(result["result"]);
     }
 
@@ -150,34 +150,13 @@ import 'ResultLivenessX.dart';
       "DOCUMENT_TYPE":DOCUMENT_TYPE
     });
 
-    if(result["status"]){
-      result.remove("status");
+    if(result["flutterstatus"]){
+      result.remove("flutterstatus");
       iAcessoBioDocument.onSuccesstDocument(ResultCameraDocument(result));
 
     }else{
-      result.remove("status");
+      result.remove("flutterstatus");
       iAcessoBioDocument.onErrorFaceMatch(result["result"]);
-    }
-
-  }
-
-  void openCameraWithCreateProcessAndInsertDocument(String code, String nome, int DOCUMENT_TYPE) async {
-    final Map<dynamic, dynamic> result = await _channel.invokeMethod('openCameraInsertDocument',{
-      "urlIntance":_urlIntance,
-      "apikey":_apikey,
-      "authToken":_authToken,
-      "code":code,
-      "nome":nome,
-      "DOCUMENT_TYPE":DOCUMENT_TYPE
-    });
-
-    if(result["status"]){
-      result.remove("status");
-      iAcessoBioDocument.onSucessDocumentInsert(result["processId"],result["typed"]);
-
-    }else{
-      result.remove("status");
-      iAcessoBioDocument.onErrorDocumentInsert(result["result"]);
     }
 
   }
@@ -194,12 +173,12 @@ import 'ResultLivenessX.dart';
       "code":code
     });
 
-    if(result["status"]){
-      result.remove("status");
+    if(result["flutterstatus"]){
+      result.remove("flutterstatus");
       iAcessoBioAuthenticate.onSuccessAuthenticate(ResultAuthenticate(result));
 
     }else{
-      result.remove("status");
+      result.remove("flutterstatus");
       iAcessoBioAuthenticate.onErrorAuthenticate(ErrorBio(result));
     }
 
@@ -216,11 +195,11 @@ import 'ResultLivenessX.dart';
       "authToken":_authToken
     });
 
-    if(result["status"]){
-      result.remove("status");
+    if(result["flutterstatus"]){
+      result.remove("flutterstatus");
       iAcessoBioCamera.onSuccessCamera(ResultCamera(result));
     }else{
-      result.remove("status");
+      result.remove("flutterstatus");
       iAcessoBioCamera.onErrorCamera(ErrorBio(result));
     }
 
@@ -239,12 +218,33 @@ import 'ResultLivenessX.dart';
       "phone":phone
     });
 
-    if(result["status"]){
-      result.remove("status");
+    if(result["flutterstatus"]){
+      result.remove("flutterstatus");
       iAcessoBioCamera.onSuccessCamera(ResultCamera(result));
     }else{
-      result.remove("status");
+      result.remove("flutterstatus");
       iAcessoBioCamera.onErrorCamera(ErrorBio(result));
+    }
+
+  }
+
+  void openCameraWithCreateProcessAndInsertDocument(String code, String nome, int DOCUMENT_TYPE) async {
+    final Map<dynamic, dynamic> result = await _channel.invokeMethod('openCameraInsertDocument',{
+      "urlIntance":_urlIntance,
+      "apikey":_apikey,
+      "authToken":_authToken,
+      "code":code,
+      "nome":nome,
+      "DOCUMENT_TYPE":DOCUMENT_TYPE
+    });
+
+    if(result["flutterstatus"]){
+      result.remove("flutterstatus");
+      iAcessoBioCamera.onSucessDocumentInsert(result["processId"],result["typed"]);
+
+    }else{
+      result.remove("flutterstatus");
+      iAcessoBioCamera.onErrorDocumentInsert(result["result"]);
     }
 
   }

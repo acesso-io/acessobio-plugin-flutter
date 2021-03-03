@@ -52,11 +52,7 @@ class AcessoBioCamera: AcessoBioView, AcessoBioDelegate{
         flutterResult(convertObjToDicionary(result: error, status: false))
     }
     
-    
-    // to remove
-    func onSuccesLivenessX(_ result: LivenessXResult!) {}
-    
-    func onErrorLivenessX(_ error: String!) {}
+
     
     
     

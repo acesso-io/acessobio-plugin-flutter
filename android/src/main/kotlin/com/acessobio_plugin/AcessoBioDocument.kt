@@ -2,6 +2,7 @@ package com.acessobio_plugin
 
 import com.acesso.acessobio_android.iAcessoBioDocument
 import com.acesso.acessobio_android.services.dto.OCRResponse
+import com.acesso.acessobio_android.services.dto.ResultFaceMatch
 
 class AcessoBioDocument : AcessoBio(), iAcessoBioDocument {
 
@@ -11,7 +12,7 @@ class AcessoBioDocument : AcessoBio(), iAcessoBioDocument {
             "openCameraDocumentOCR" -> openCameraDocumentOCR()
             "openFaceMatch" -> openFaceMatch()
             "openCameraDocument" -> openCameraDocument()
-            "openCameraInsertDocument" -> openCameraWithCreateProcess()
+
 
             else -> onError("metedo nao encontrado")
         }
@@ -53,20 +54,6 @@ class AcessoBioDocument : AcessoBio(), iAcessoBioDocument {
 
     }
 
-    private fun openCameraWithCreateProcess(){
-
-        val code = intent.getStringExtra("code")
-        val nome = intent.getStringExtra("nome")
-        val documentType = intent.getIntExtra("DOCUMENT_TYPE",0)
-
-        if(documentType == 0 || code == null || nome == null){
-            onError("informe tipo de documento")
-        }else{
-            acessoBio.openCameraWithCreateProcess(code, nome, documentType)
-        }
-
-    }
-
     //override
     override fun onSuccessOCR(ocr: OCRResponse?) {
         onSuccess(ocr)
@@ -76,8 +63,8 @@ class AcessoBioDocument : AcessoBio(), iAcessoBioDocument {
         onError(error)
     }
 
-    override fun onSucessFaceMatch(status: Boolean) {
-        onSuccess(status)
+    override fun onSucessFaceMatch(resultFaceMatch: ResultFaceMatch?) {
+        onSuccess(resultFaceMatch)
     }
 
     override fun onErrorFaceMatch(error: String?) {
@@ -87,7 +74,7 @@ class AcessoBioDocument : AcessoBio(), iAcessoBioDocument {
     override fun onSuccesstDocument(base64: String?) {
         onSuccess(base64)
     }
-    
+
     override fun onErrorDocument(error: String?) {
         onError(error)
     }
@@ -118,7 +105,13 @@ class AcessoBioDocument : AcessoBio(), iAcessoBioDocument {
         onError(error)
     }
 
-   
+    override fun userClosedCameraManually() {
+        TODO("Not yet implemented")
+    }
+
+
+
+
 
 
 }

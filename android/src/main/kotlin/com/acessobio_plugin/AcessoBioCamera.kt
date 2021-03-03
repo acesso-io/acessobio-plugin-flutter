@@ -11,6 +11,7 @@ class AcessoBioCamera: AcessoBio(), iAcessoBioCamera {
 
             "openCamera" -> acessoBio.openCamera()
             "openCameraWithCreateProcess" -> openCameraWithCreateProcess()
+            "openCameraInsertDocument" -> openCameraInsertDocument()
 
             else -> onError("metedo nao encontrado")
         }
@@ -41,6 +42,20 @@ class AcessoBioCamera: AcessoBio(), iAcessoBioCamera {
 
     }
 
+    private fun openCameraInsertDocument(){
+
+        val code = intent.getStringExtra("code")
+        val nome = intent.getStringExtra("nome")
+        val documentType = intent.getIntExtra("DOCUMENT_TYPE",0)
+
+        if(documentType == 0 || code == null || nome == null){
+            onError("informe tipo de documento")
+        }else{
+            acessoBio.openCameraWithCreateProcess(nome, code, documentType)
+        }
+
+    }
+
     override fun onSuccessCamera(result: ResultCamera?) {
         onSuccess(result)
     }
@@ -49,5 +64,8 @@ class AcessoBioCamera: AcessoBio(), iAcessoBioCamera {
         onError(errorBio)
     }
 
+    override fun userClosedCameraManually() {
+        TODO("Not yet implemented")
+    }
 
 }

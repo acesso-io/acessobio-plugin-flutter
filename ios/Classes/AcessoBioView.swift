@@ -75,7 +75,7 @@ class AcessoBioView: UIViewController {
               
         }
         
-        dict["status"] = status
+        dict["flutterstatus"] = status
         
         return dict
 
@@ -86,7 +86,7 @@ class AcessoBioView: UIViewController {
         var dict = [String:Any]()
         
         dict["result"] = result
-        dict["status"] = status
+        dict["flutterstatus"] = status
         
         return dict
 
@@ -97,7 +97,7 @@ class AcessoBioView: UIViewController {
         var dict = [String:Any]()
         
         dict["result"] = result
-        dict["status"] = status
+        dict["flutterstatus"] = status
         
         return dict
 
@@ -108,7 +108,7 @@ class AcessoBioView: UIViewController {
         var dict = [String:Any]()
         
         dict["result"] = result
-        dict["status"] = status
+        dict["flutterstatus"] = status
         
         return dict
 

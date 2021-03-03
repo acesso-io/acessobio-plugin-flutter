@@ -100,24 +100,13 @@ class AcessoBioDocument: AcessoBioView, AcessoBioDelegate{
         flutterResult(convertObjToDicionary(result: error, status: false))
     }
     
-    func onSuccessFacematch(_ result: FacematchResult!){
-        flutterResult(convertObjToDicionary(result: result, status: true))
+    func onSuccessFacematch(_ result: FacematchResult?){
+        flutterResult(convertObjToDicionary(result: result!, status: true))
     }
     
     func onErrorFacematch(_ result: String!){
         flutterResult(convertObjToDicionary(result: result, status: false))
     }
-    
-    
-    // to remove
-    func onSuccesLivenessX(_ result: LivenessXResult!) {}
-    
-    func onErrorLivenessX(_ error: String!) {}
-    
-    func onSuccesCameraFace(_ result: CameraFaceResult!) {}
-    
-    func onErrorCameraFace(_ error: String!) {}
-    
-    
+        
 
 }

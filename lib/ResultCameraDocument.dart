@@ -6,7 +6,7 @@ class ResultCameraDocument {
   ResultCameraDocument(Map<dynamic, dynamic> map){
 
     for(String nome in map.keys){
-      if(nome == "base64"){
+      if(nome == "result"){ //base64
         base64 = map[nome];
       }
     }

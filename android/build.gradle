@@ -47,7 +47,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
 
     implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'com.github.acesso-io:acessobio-android:1.1.18'
+    implementation 'com.github.acesso-io:acessobio-android:1.1.18.1'
 //    implementation 'com.github.acesso-io:acessobio-android:cenario-flutterplugin-jitpack-teste-SNAPSHOT'
 
 }

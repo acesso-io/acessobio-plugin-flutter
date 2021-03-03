@@ -38,15 +38,7 @@ class AcessoBioAuthenticate: AcessoBioView, AcessoBioDelegate{
     func onErrorFacesCompare(_ error: String!){
         flutterResult(convertObjToDicionary(result: error, status: false))
     }
-    
-    // to remove
-    func onSuccesLivenessX(_ result: LivenessXResult!) {}
-    
-    func onErrorLivenessX(_ error: String!) {}
-    
-    func onSuccesCameraFace(_ result: CameraFaceResult!) {}
-    
-    func onErrorCameraFace(_ error: String!) {}
+
     
     
 }
