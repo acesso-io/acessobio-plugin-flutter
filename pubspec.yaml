@@ -1,6 +1,6 @@
 name: acessobio_plugin
 description: Esta biblioteca visa implementar a tecnologia Unico para prova de vida sob.
-version: 0.0.7
+version: 0.0.8
 homepage: https://github.com/acesso-io/acessobio-plugin-flutter
 
 environment:
