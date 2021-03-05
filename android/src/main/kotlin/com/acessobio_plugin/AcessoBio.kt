@@ -144,10 +144,24 @@ abstract class AcessoBio : AppCompatActivity(), iAcessoBio {
         finish()
     }
 
+    //ERROR AcessoBio
     override fun onErrorAcessoBio(errorBio: ErrorBio?) {
-        onError(errorBio)
+        if(pluginContext != null){
+            if(errorBio != null){
+                pluginContext!!.onErrorPluginAcessoBio(errorBio)
+            }else{
+                onError("erro desconhecido")
+            }
+        }else{
+            onError("Erro ao retornar resultado, o contexto foi perdido")
+        }
+        finish()
     }
 
+    override fun userClosedCameraManually() {
+        pluginContext!!.userClosedCameraManually()
+        finish()
+    }
 
     //region Camera Permission
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {

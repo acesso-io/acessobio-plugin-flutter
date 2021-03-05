@@ -8,7 +8,7 @@
 import UIKit
 import Flutter
 
-class AcessoBioView: UIViewController {
+class AcessoBioView: UIViewController, AcessoBioDelegate {
     
     var acessoBioManager: AcessoBioManager!
     var isOpenCamera: Bool =  false
@@ -26,13 +26,15 @@ class AcessoBioView: UIViewController {
         callMethodBio()
         
         
+
         self.view.backgroundColor = UIColor.white;
+        self.navigationController!.setToolbarHidden(false, animated: false)
     }
     
     func callMethodBio(){}
     
     private func initAcessoBio(){
-        isOpenCamera = true
+        
         acessoBioManager = AcessoBioManager(
             viewController: self,
             url: urlIntance,
@@ -45,14 +47,19 @@ class AcessoBioView: UIViewController {
         if(isOpenCamera){
             self.dismiss(animated: true, completion: nil)
         }
+        isOpenCamera = true
+    }
+    
+    func userClosedCameraManually(){
+        flutterResult(convertObjToDicionary(result: 0, status: -1))
     }
     
     func onError(msg: String){
-        flutterResult(convertObjToDicionary(result: msg,status: false))
+        flutterResult(convertObjToDicionary(result: msg,status: 0))
     }
     
     //CONVERT RESULT TO HASHMAP
-    func convertObjToDicionary(result : NSObject, status: Bool) -> [String:Any] {
+    func convertObjToDicionary(result : NSObject, status: Int) -> [String:Any] {
         
         let obj: AnyClass = result.classForCoder
         var outCount : UInt32 = 0
@@ -81,7 +88,7 @@ class AcessoBioView: UIViewController {
 
     }
     
-    func convertObjToDicionary(result : Bool, status: Bool) -> [String:Any] {
+    func convertObjToDicionary(result : Bool, status: Int) -> [String:Any] {
         
         var dict = [String:Any]()
         
@@ -92,7 +99,7 @@ class AcessoBioView: UIViewController {
 
     }
     
-    func convertObjToDicionary(result : String, status: Bool) -> [String:Any] {
+    func convertObjToDicionary(result : String, status: Int) -> [String:Any] {
         
         var dict = [String:Any]()
         
@@ -103,7 +110,7 @@ class AcessoBioView: UIViewController {
 
     }
     
-    func convertObjToDicionary(result : Int, status: Bool) -> [String:Any] {
+    func convertObjToDicionary(result : Int, status: Int) -> [String:Any] {
         
         var dict = [String:Any]()
         
@@ -113,6 +120,7 @@ class AcessoBioView: UIViewController {
         return dict
 
     }
+    
     
     
     

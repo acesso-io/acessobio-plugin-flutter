@@ -1,5 +1,5 @@
-import 'ErrorBio.dart';
-import 'ResultLivenessX.dart';
+import '../result/error/ErrorBio.dart';
+import '../result/success/ResultLivenessX.dart';
 
 abstract class IAcessoBioLiveness
 {

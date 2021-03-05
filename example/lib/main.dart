@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:acessobio_plugin/OCRResponse.dart';
-import 'package:acessobio_plugin/ResultAuthenticate.dart';
-import 'package:acessobio_plugin/ResultCamera.dart';
-import 'package:acessobio_plugin/ResultLivenessX.dart';
-import 'package:acessobio_plugin/ResultCameraDocument.dart';
-import 'package:acessobio_plugin/ResultFacematch.dart';
 import 'package:acessobio_plugin_example/acessoPass.dart';
-import 'package:acessobio_plugin/IAcessoBioAuthenticate.dart';
-import 'package:acessobio_plugin/IAcessoBioCamera.dart';
-import 'package:acessobio_plugin/IAcessoBioDocument.dart';
-import 'package:acessobio_plugin/IAcessoBioLiveness.dart';
 import 'package:acessobio_plugin/acessobio_plugin.dart';
-import 'package:acessobio_plugin/ErrorBio.dart';
+import 'package:acessobio_plugin/abstracts/IAcessoBio.dart';
+import 'package:acessobio_plugin/abstracts/IAcessoBioAuthenticate.dart';
+import 'package:acessobio_plugin/abstracts/IAcessoBioCamera.dart';
+import 'package:acessobio_plugin/abstracts/IAcessoBioDocument.dart';
+import 'package:acessobio_plugin/abstracts/IAcessoBioLiveness.dart';
+import 'package:acessobio_plugin/result/success/OCRResponse.dart';
+import 'package:acessobio_plugin/result/success/ResultAuthenticate.dart';
+import 'package:acessobio_plugin/result/success/ResultCamera.dart';
+import 'package:acessobio_plugin/result/success/ResultLivenessX.dart';
+import 'package:acessobio_plugin/result/success/ResultCameraDocument.dart';
+import 'package:acessobio_plugin/result/success/ResultFacematch.dart';
+import 'package:acessobio_plugin/result/error/ErrorBio.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -22,7 +24,8 @@ class MyApp extends StatefulWidget  {
   _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> implements IAcessoBioCamera, IAcessoBioDocument, IAcessoBioLiveness, IAcessoBioAuthenticate {
+
+class _MyAppState extends State<MyApp> implements IAcessoBio, IAcessoBioCamera, IAcessoBioDocument, IAcessoBioLiveness, IAcessoBioAuthenticate {
 
   String _platformVersion;
 
@@ -38,51 +41,32 @@ class _MyAppState extends State<MyApp> implements IAcessoBioCamera, IAcessoBioDo
     //Inicialmente, para utilizar a tecnologia implemente a classe Acessobio.
     //Implementar construtor de acordo com a tecnologia que ira utilizar
 
-    AcessoBio acessobioLiveness = new AcessoBio.iAcessoBioLiveness(
+    AcessoBio acessobio = new AcessoBio(
         this,
         acessoPass.url,
         acessoPass.apikey,
         acessoPass.token
     );
-    AcessoBio acessobioDocument = new AcessoBio.iAcessoBioDocument(
-        this,
-        acessoPass.url,
-        acessoPass.apikey,
-        acessoPass.token
-    );
-    AcessoBio acessobioAuth = new AcessoBio.iAcessoBioAuthenticate(
-        this,
-        acessoPass.url,
-        acessoPass.apikey,
-        acessoPass.token
-    );
-    AcessoBio acessobioCamera = new AcessoBio.iAcessoBioCamera(
-        this,
-        acessoPass.url,
-        acessoPass.apikey,
-        acessoPass.token
-    );
-
 
     //  --- LIVENESS ---
-    acessobioLiveness.openLiveness;
-    // acessobioLiveness.openLivenessWithCreateProcess("lucas diniz","12345678909");
+    acessobio.openLiveness;
+    // acessobio.openLivenessWithCreateProcess("lucas diniz","12345678909");
 
 
     //  --- DOCUMENT ---
-    // acessobioDocument.openCameraDocumentOCR(AcessobioPlugin.CNH);
-    // acessobioDocument.openFaceMatch(AcessobioPlugin.CNH);
-    // acessobioDocument.openCameraDocument(AcessobioPlugin.CNH);
+    // acessobio.openCameraDocumentOCR(AcessoBio.CNH);
+    // acessobio.openFaceMatch(AcessoBio.CNH);
+    // acessobio.openCameraDocument(AcessoBio.CNH);
 
 
     //  --- AUTH ---
-    // acessobioAuth.openLivenessAuthenticate("12345678909");
+    // acessobio.openLivenessAuthenticate("12345678909");
 
 
     //  --- CAMERA ---
-    // acessobioCamera.openCamera;
-    // acessobioCamera.openCameraWithCreateProcess("lucas", "12345678909",null,null,null,null);
-    // acessobioCamera.openCameraWithCreateProcessAndInsertDocument("12345678909", "Lucas Diniz", AcessobioPlugin.CNH);// no IOS ainda nao foi inplementado // retornando na interface errada
+    // acessobio.openCamera;
+    // acessobio.openCameraWithCreateProcess("lucas", "12345678909",null,null,null,null);
+    // acessobio.openCameraWithCreateProcessAndInsertDocument("12345678909", "Lucas Diniz", AcessoBio.CNH);// no IOS ainda nao foi inplementado // retornando na interface errada
 
 
     if (!mounted) return;
@@ -107,19 +91,26 @@ class _MyAppState extends State<MyApp> implements IAcessoBioCamera, IAcessoBioDo
     );
   }
 
+
+  //OVERRIDES
+
+  //region -- IAcessoBio
   @override
-  void onErrorAuthenticate(ErrorBio errorBio) {
-    // TODO: implement onErrorAuthenticate
+  void onErrorAcessoBio(ErrorBio errorBio) {
+    // TODO: implement onErrorAcessoBio
   }
 
+  @override
+  void userClosedCameraManually() {
+    // TODO: implement userClosedCameraManually
+  }
+
+  //endregion
+
+  //region -- IAcessoBioCamera
   @override
   void onErrorCamera(ErrorBio errorBio) {
     // TODO: implement onErrorCamera
-  }
-
-  @override
-  void onErrorDocument(String error) {
-    // TODO: implement onErrorDocument
   }
 
   @override
@@ -128,13 +119,26 @@ class _MyAppState extends State<MyApp> implements IAcessoBioCamera, IAcessoBioDo
   }
 
   @override
-  void onErrorFaceMatch(String error) {
-    // TODO: implement onErrorFaceMatch
+  void onSuccessCamera(ResultCamera result) {
+    // TODO: implement onSuccessCamera
   }
 
   @override
-  void onErrorLiveness(ErrorBio errorBio) {
-    // TODO: implement onErrorLiveness
+  void onSucessDocumentInsert(String processId, String typed) {
+    // TODO: implement onSucessDocumentInsert
+  }
+
+  //endregion
+
+  //region -- IAcessoBioDocument
+  @override
+  void onErrorDocument(String error) {
+    // TODO: implement onErrorDocument
+  }
+
+  @override
+  void onErrorFaceMatch(String error) {
+    // TODO: implement onErrorFaceMatch
   }
 
   @override
@@ -143,18 +147,8 @@ class _MyAppState extends State<MyApp> implements IAcessoBioCamera, IAcessoBioDo
   }
 
   @override
-  void onSuccessAuthenticate(ResultAuthenticate result) {
-    // TODO: implement onSuccessAuthenticate
-  }
-
-  @override
-  void onSuccessCamera(ResultCamera result) {
-    // TODO: implement onSuccessCamera
-  }
-
-  @override
-  void onSuccessLiveness(ResultLivenessX result) {
-    // TODO: implement onSuccessLiveness
+  void onSuccessFaceMatch(ResultFacematch result) {
+    // TODO: implement onSuccessFaceMatch
   }
 
   @override
@@ -167,15 +161,33 @@ class _MyAppState extends State<MyApp> implements IAcessoBioCamera, IAcessoBioDo
     // TODO: implement onSuccesstDocument
   }
 
+  //endregion
+
+  //region -- IAcessoBioLiveness
   @override
-  void onSucessDocumentInsert(String processId, String typed) {
-    // TODO: implement onSucessDocumentInsert
+  void onErrorLiveness(ErrorBio errorBio) {
+    // TODO: implement onErrorLiveness
   }
 
   @override
-  void onSuccessFaceMatch(ResultFacematch result) {
-    // TODO: implement onSucessDocumentInsert
+  void onSuccessLiveness(ResultLivenessX result) {
+    // TODO: implement onSuccessLiveness
   }
+
+  //endregion
+
+  //region -- IAcessoBioAuthenticate
+  @override
+  void onErrorAuthenticate(ErrorBio errorBio) {
+    // TODO: implement onErrorAuthenticate
+  }
+
+  @override
+  void onSuccessAuthenticate(ResultAuthenticate result) {
+    // TODO: implement onSuccessAuthenticate
+  }
+
+  //endregion
 
 
 }

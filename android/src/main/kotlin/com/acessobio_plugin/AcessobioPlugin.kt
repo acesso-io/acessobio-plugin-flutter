@@ -155,38 +155,6 @@ class AcessobioPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
 
   //endregion
 
-  //region RETURN THE RESULTS
-
-  fun onSuccessPlugin(resultBio: Any) {
-    result.success(convertObjToMapReflection(resultBio,true))//Status false pq vem do onSuccess
-  }
-
-  fun onSuccessPlugin(resultBio: Boolean) {
-    result.success(convertObjToMapReflection(resultBio,true))//Status false pq vem do onSuccess
-  }
-
-  fun onSuccessPlugin(resultBio: String) {
-    result.success(convertObjToMapReflection(resultBio,true))//Status false pq vem do onSuccess
-  }
-
-  fun onSuccessPlugin(resultBio: Int) {
-    result.success(convertObjToMapReflection(resultBio,true))//Status false pq vem do onSuccess
-  }
-
-  fun onErrorPlugin(error: Any) {
-    result.success(convertObjToMapReflection(error, false))//Status false pq vem do onError
-  }
-
-  fun onErrorPlugin(error: String) {
-    result.success(convertObjToMapReflection(error, false))//Status false pq vem do onError
-  }
-
-  fun onErrorPlugin(error: Int) {
-    result.success(convertObjToMapReflection(error, false))//Status false pq vem do onError
-  }
-
-  //endregion
-
   private fun getIntent(acessoBio: AcessoBio, methodCall: String): Intent {
 
     acessoBio.setPluginContext(this)
@@ -201,7 +169,6 @@ class AcessobioPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     return intent
 
   }
-
   private fun validKeys(urlIntance: String?, apikey: String?, authToken: String?) {
     if(urlIntance == null || apikey == null || authToken == null ) {
       this.result.success("Informe urlIntance, apikey, authToken para proceguir")
@@ -212,9 +179,52 @@ class AcessobioPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     }
   }
 
+  //region RETURN THE RESULTS
+
+  //SUCCESS
+  fun onSuccessPlugin(resultBio: Any) {
+    result.success(convertObjToMapReflection(resultBio,1))//Status false pq vem do onSuccess
+  }
+
+  fun onSuccessPlugin(resultBio: Boolean) {
+    result.success(convertObjToMapReflection(resultBio,1))//Status false pq vem do onSuccess
+  }
+
+  fun onSuccessPlugin(resultBio: String) {
+    result.success(convertObjToMapReflection(resultBio,1))//Status false pq vem do onSuccess
+  }
+
+  fun onSuccessPlugin(resultBio: Int) {
+    result.success(convertObjToMapReflection(resultBio,1))//Status false pq vem do onSuccess
+  }
+
+  //ERRORS
+  fun onErrorPlugin(error: Any) {
+    result.success(convertObjToMapReflection(error, 0))//Status false pq vem do onError
+  }
+
+  fun onErrorPlugin(error: String) {
+    result.success(convertObjToMapReflection(error, 0))//Status false pq vem do onError
+  }
+
+  fun onErrorPlugin(error: Int) {
+    result.success(convertObjToMapReflection(error, 0))//Status false pq vem do onError
+  }
+
+  //ERROR ACESSOBIO
+  fun onErrorPluginAcessoBio(error: Any) {
+    result.success(convertObjToMapReflection(error, 0))//Status false pq vem do onError
+  }
+
+  fun userClosedCameraManually() {
+    result.success(convertObjToMapReflection(0,-1))//Status false pq vem do onError
+  }
+
+  //endregion
+
   //region Convert to HashMap
 
-  private fun convertObjToMapReflection(objects: Any, status: Boolean): java.util.HashMap<String, Any> {
+  private fun convertObjToMapReflection(objects: Any, status: Int): java.util.HashMap<String, Any> {
 
     val hashMap:HashMap<String,Any> = HashMap()
 
@@ -238,7 +248,7 @@ class AcessobioPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     return hashMap
 
   }
-  private fun convertObjToMapReflection(result: Boolean, status: Boolean): java.util.HashMap<String, Any> {
+  private fun convertObjToMapReflection(result: Boolean, status: Int): java.util.HashMap<String, Any> {
 
     val hashMap:HashMap<String,Any> = HashMap()
 
@@ -248,7 +258,7 @@ class AcessobioPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     return hashMap
 
   }
-  private fun convertObjToMapReflection(result: String, status: Boolean): java.util.HashMap<String, Any> {
+  private fun convertObjToMapReflection(result: String, status: Int): java.util.HashMap<String, Any> {
 
     val hashMap:HashMap<String,Any> = HashMap()
 
@@ -258,7 +268,7 @@ class AcessobioPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     return hashMap
 
   }
-  private fun convertObjToMapReflection(result: Int, status: Boolean): java.util.HashMap<String, Any> {
+  private fun convertObjToMapReflection(result: Int, status: Int): java.util.HashMap<String, Any> {
 
     val hashMap:HashMap<String,Any> = HashMap()
 

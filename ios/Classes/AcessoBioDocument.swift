@@ -5,7 +5,7 @@
 //  Created by Lucas Diniz Silva on 26/02/21.
 //
 
-class AcessoBioDocument: AcessoBioView, AcessoBioDelegate{
+class AcessoBioDocument: AcessoBioView{
     
     override func callMethodBio(){
         switch method {
@@ -85,27 +85,27 @@ class AcessoBioDocument: AcessoBioView, AcessoBioDelegate{
     
     //results
     func onSuccesCameraDocument(_ result: CameraDocumentResult!){
-        flutterResult(convertObjToDicionary(result: result, status: true))
+        flutterResult(convertObjToDicionary(result: result, status: 1))
     }
     
     func onErrorCameraDocument(_ error: String!){
-        flutterResult(convertObjToDicionary(result: error, status: false))
+        flutterResult(convertObjToDicionary(result: error, status: 0))
     }
 
     func onSuccessOCR(_ result: OCRResult!){
-        flutterResult(convertObjToDicionary(result: result, status: true))
+        flutterResult(convertObjToDicionary(result: result, status: 1))
     }
 
     func onErrorOCR(_ error: String){
-        flutterResult(convertObjToDicionary(result: error, status: false))
+        flutterResult(convertObjToDicionary(result: error, status: 0))
     }
     
     func onSuccessFacematch(_ result: FacematchResult?){
-        flutterResult(convertObjToDicionary(result: result!, status: true))
+        flutterResult(convertObjToDicionary(result: result!, status: 1))
     }
     
     func onErrorFacematch(_ result: String!){
-        flutterResult(convertObjToDicionary(result: result, status: false))
+        flutterResult(convertObjToDicionary(result: result, status: 0))
     }
         
 

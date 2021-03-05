@@ -65,6 +65,38 @@ public class SwiftAcessobioPlugin: NSObject, FlutterPlugin {
         
     }
     
+    private func createView(method: String, acessoBioView:AcessoBioView) -> AcessoBioView {
+        
+        acessoBioView.flutterResult = result
+        acessoBioView.method = method
+        acessoBioView.urlIntance = self.urlIntance
+        acessoBioView.apikey = self.apikey
+        acessoBioView.authToken = self.authToken
+        
+        return acessoBioView
+    }
+    private func initView(acessoBioView:AcessoBioView ){
+        let nav = UINavigationController(rootViewController: acessoBioView)
+        nav.setNavigationBarHidden(false, animated: false)
+        nav.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+        let viewController: UIViewController = (UIApplication.shared.delegate?.window??.rootViewController)!;
+        viewController.present(nav, animated: true, completion: nil)
+    }
+    private func validKeys(urlIntance: String?, apikey: String?, authToken: String?){
+            
+        if(urlIntance != nil && urlIntance != "" ){
+            self.urlIntance = urlIntance!
+        }else{self.result(FlutterError.init(code: "bad args urlIntance", message: nil, details: nil))}
+            
+        if(apikey != nil && apikey != "" ){
+            self.apikey = apikey!
+        }else{self.result(FlutterError.init(code: "bad args apikey", message: nil, details: nil))}
+           
+        if(authToken != nil && authToken != "" ){
+            self.authToken = authToken!
+        }else{self.result(FlutterError.init(code: "bad args authToken", message: nil, details: nil))}
+        
+    }
     
     // Liveness
     private func acessoBioLiveness(method: String){
@@ -99,38 +131,7 @@ public class SwiftAcessobioPlugin: NSObject, FlutterPlugin {
         
         initView(acessoBioView: view)
     }
-    private func createView(method: String, acessoBioView:AcessoBioView) -> AcessoBioView {
-        
-        acessoBioView.flutterResult = result
-        acessoBioView.method = method
-        acessoBioView.urlIntance = self.urlIntance
-        acessoBioView.apikey = self.apikey
-        acessoBioView.authToken = self.authToken
-        
-        return acessoBioView
-    }
-    private func initView(acessoBioView:AcessoBioView ){
-        let nav = UINavigationController(rootViewController: acessoBioView)
-        nav.setNavigationBarHidden(false, animated: false)
-        nav.modalPresentationStyle = UIModalPresentationStyle.fullScreen
-        let viewController: UIViewController = (UIApplication.shared.delegate?.window??.rootViewController)!;
-        viewController.present(nav, animated: true, completion: nil)
-    }
-    private func validKeys(urlIntance: String?, apikey: String?, authToken: String?){
-            
-        if(urlIntance != nil && urlIntance != "" ){
-            self.urlIntance = urlIntance!
-        }else{self.result(FlutterError.init(code: "bad args urlIntance", message: nil, details: nil))}
-            
-        if(apikey != nil && apikey != "" ){
-            self.apikey = apikey!
-        }else{self.result(FlutterError.init(code: "bad args apikey", message: nil, details: nil))}
-           
-        if(authToken != nil && authToken != "" ){
-            self.authToken = authToken!
-        }else{self.result(FlutterError.init(code: "bad args authToken", message: nil, details: nil))}
-        
-    }
+    
     
     //Auth
     private func openLivenessAuthenticate(method: String, code: String?){

@@ -1,16 +1,17 @@
 
 import 'package:flutter/services.dart';
-import 'ErrorBio.dart';
-import 'IAcessoBioAuthenticate.dart';
-import 'IAcessoBioCamera.dart';
-import 'IAcessoBioDocument.dart';
-import 'IAcessoBioLiveness.dart';
-import 'ResultCamera.dart';
-import 'ResultAuthenticate.dart';
-import 'OCRResponse.dart';
-import 'ResultCameraDocument.dart';
-import 'ResultFacematch.dart';
-import 'ResultLivenessX.dart';
+import 'abstracts/IAcessoBio.dart';
+import 'abstracts/IAcessoBioAuthenticate.dart';
+import 'abstracts/IAcessoBioCamera.dart';
+import 'abstracts/IAcessoBioDocument.dart';
+import 'abstracts/IAcessoBioLiveness.dart';
+import 'result/success/ResultCamera.dart';
+import 'result/success/ResultAuthenticate.dart';
+import 'result/success/OCRResponse.dart';
+import 'result/success/ResultCameraDocument.dart';
+import 'result/success/ResultFacematch.dart';
+import 'result/success/ResultLivenessX.dart';
+import 'result/error/ErrorBio.dart';
 
 class AcessoBio {
 
@@ -24,64 +25,75 @@ class AcessoBio {
   static final int RG_VERSO = 502;
   static final int CNH = 4;
 
+  IAcessoBio iAcessoBio;
   IAcessoBioCamera iAcessoBioCamera;
   IAcessoBioDocument iAcessoBioDocument;
   IAcessoBioLiveness iAcessoBioLiveness;
   IAcessoBioAuthenticate iAcessoBioAuthenticate;
 
-  AcessoBio.iAcessoBioCamera(IAcessoBioCamera iAcessoBioCamera, String urlIntance, String apikey, String authToken){
+  AcessoBio(IAcessoBio context, String urlIntance, String apikey, String authToken){
 
-    this.iAcessoBioCamera = iAcessoBioCamera;
+    if(context is IAcessoBio){
+      this.iAcessoBio = context;
+    }else{
+      throw new Exception("A classe iAcessoBio não foi implementada. É necessário realizar a implementação para prosseguir.");
+    }
 
-    _urlIntance = urlIntance;
-    _apikey = apikey;
-    _authToken = authToken;
-  }
-
-  AcessoBio.iAcessoBioDocument(IAcessoBioDocument iAcessoBioDocument, String urlIntance, String apikey, String authToken){
-
-    this.iAcessoBioDocument = iAcessoBioDocument;
-
-    _urlIntance = urlIntance;
-    _apikey = apikey;
-    _authToken = authToken;
-
-  }
-
-  AcessoBio.iAcessoBioLiveness(IAcessoBioLiveness iAcessoBioLiveness, String urlIntance, String apikey, String authToken){
-
-    this.iAcessoBioLiveness = iAcessoBioLiveness;
+    if(context is IAcessoBioCamera){
+      this.iAcessoBioCamera = context as IAcessoBioCamera;
+    }
+    if(context is IAcessoBioDocument){
+      this.iAcessoBioDocument = context as IAcessoBioDocument;
+    }
+    if(context is IAcessoBioLiveness){
+      this.iAcessoBioLiveness = context as IAcessoBioLiveness;
+    }
+    if(context is IAcessoBioAuthenticate){
+      this.iAcessoBioAuthenticate = context as IAcessoBioAuthenticate;
+    }
 
     _urlIntance = urlIntance;
     _apikey = apikey;
     _authToken = authToken;
+
   }
 
-  AcessoBio.iAcessoBioAuthenticate(IAcessoBioAuthenticate iAcessoBioAuthenticate, String urlIntance, String apikey, String authToken){
+  bool validResult(Map<dynamic, dynamic> result){
 
-    this.iAcessoBioAuthenticate = iAcessoBioAuthenticate;
+    var flutterResult = result["flutterstatus"];
 
-    _urlIntance = urlIntance;
-    _apikey = apikey;
-    _authToken = authToken;
+    if(flutterResult == 2){
+      iAcessoBio.onErrorAcessoBio(ErrorBio(result));
+      return false;
+    }else if(flutterResult == -1){
+      iAcessoBio.userClosedCameraManually();
+      return false;
+    }else {
+      return true;
+    }
+
   }
+
 
   //region LIVENESS
   get openLiveness async {
+
     final Map<dynamic, dynamic> result = await _channel.invokeMethod('openLiveness',{
       "urlIntance":_urlIntance,
       "apikey":_apikey,
       "authToken":_authToken
     });
 
-    if(result["flutterstatus"]){
-      result.remove("flutterstatus");
-      iAcessoBioLiveness.onSuccessLiveness(ResultLivenessX(result));
+    if(validResult(result)) {
 
-    }else{
-      result.remove("flutterstatus");
-      iAcessoBioLiveness.onErrorLiveness(ErrorBio(result));
+      if(result["flutterstatus"] == 1) {
+        iAcessoBioLiveness.onSuccessLiveness(ResultLivenessX(result));
+      }else{
+        iAcessoBioLiveness.onErrorLiveness(ErrorBio(result));
+      }
+
     }
+
 
   }
 
@@ -94,14 +106,16 @@ class AcessoBio {
       "document":document
     });
 
-    if(result["flutterstatus"]){
-      result.remove("flutterstatus");
-      iAcessoBioLiveness.onSuccessLiveness(ResultLivenessX(result));
+    if(validResult(result)){
 
-    }else{
-      result.remove("flutterstatus");
-      iAcessoBioLiveness.onErrorLiveness(ErrorBio(result));
+      if(result["flutterstatus"] == 1){
+        iAcessoBioLiveness.onSuccessLiveness(ResultLivenessX(result));
+      }else{
+        iAcessoBioLiveness.onErrorLiveness(ErrorBio(result));
+      }
+
     }
+
 
   }
   //endregion
@@ -116,13 +130,14 @@ class AcessoBio {
       "DOCUMENT_TYPE":DOCUMENT_TYPE
     });
 
-    if(result["flutterstatus"]){
-      result.remove("flutterstatus");
-      iAcessoBioDocument.onSuccessOCR(OCRResponse(result));
+    if(validResult(result)){
 
-    }else{
-      result.remove("flutterstatus");
-      iAcessoBioDocument.onErrorOCR(result["result"]);
+      if(result["flutterstatus"] == 1){
+        iAcessoBioDocument.onSuccessOCR(OCRResponse(result));
+      }else{
+        iAcessoBioDocument.onErrorOCR(result["result"]);
+      }
+
     }
 
   }
@@ -135,12 +150,14 @@ class AcessoBio {
       "DOCUMENT_TYPE":DOCUMENT_TYPE
     });
 
-    if(result["flutterstatus"]){
-      result.remove("flutterstatus");
-      iAcessoBioDocument.onSuccessFaceMatch(ResultFacematch(result));
-    }else{
-      result.remove("flutterstatus");
-      iAcessoBioDocument.onErrorFaceMatch(result["result"]);
+    if(validResult(result)){
+
+      if(result["flutterstatus"] == 1){
+        iAcessoBioDocument.onSuccessFaceMatch(ResultFacematch(result));
+      }else{
+        iAcessoBioDocument.onErrorFaceMatch(result["result"]);
+      }
+
     }
 
   }
@@ -153,13 +170,14 @@ class AcessoBio {
       "DOCUMENT_TYPE":DOCUMENT_TYPE
     });
 
-    if(result["flutterstatus"]){
-      result.remove("flutterstatus");
-      iAcessoBioDocument.onSuccesstDocument(ResultCameraDocument(result));
+    if(validResult(result)){
 
-    }else{
-      result.remove("flutterstatus");
-      iAcessoBioDocument.onErrorFaceMatch(result["result"]);
+      if(result["flutterstatus"] == 1){
+        iAcessoBioDocument.onSuccesstDocument(ResultCameraDocument(result));
+      }else{
+        iAcessoBioDocument.onErrorFaceMatch(result["result"]);
+      }
+
     }
 
   }
@@ -176,13 +194,14 @@ class AcessoBio {
       "code":code
     });
 
-    if(result["flutterstatus"]){
-      result.remove("flutterstatus");
-      iAcessoBioAuthenticate.onSuccessAuthenticate(ResultAuthenticate(result));
+    if(validResult(result)){
 
-    }else{
-      result.remove("flutterstatus");
-      iAcessoBioAuthenticate.onErrorAuthenticate(ErrorBio(result));
+      if(result["flutterstatus"] == 1){
+        iAcessoBioAuthenticate.onSuccessAuthenticate(ResultAuthenticate(result));
+      }else{
+        iAcessoBioAuthenticate.onErrorAuthenticate(ErrorBio(result));
+      }
+
     }
 
   }
@@ -198,13 +217,16 @@ class AcessoBio {
       "authToken":_authToken
     });
 
-    if(result["flutterstatus"]){
-      result.remove("flutterstatus");
-      iAcessoBioCamera.onSuccessCamera(ResultCamera(result));
-    }else{
-      result.remove("flutterstatus");
-      iAcessoBioCamera.onErrorCamera(ErrorBio(result));
+    if(validResult(result)){
+
+      if(result["flutterstatus"] == 1){
+        iAcessoBioCamera.onSuccessCamera(ResultCamera(result));
+      }else{
+        iAcessoBioCamera.onErrorCamera(ErrorBio(result));
+      }
+
     }
+
 
   }
 
@@ -221,12 +243,14 @@ class AcessoBio {
       "phone":phone
     });
 
-    if(result["flutterstatus"]){
-      result.remove("flutterstatus");
-      iAcessoBioCamera.onSuccessCamera(ResultCamera(result));
-    }else{
-      result.remove("flutterstatus");
-      iAcessoBioCamera.onErrorCamera(ErrorBio(result));
+    if(validResult(result)){
+
+      if(result["flutterstatus"] == 1){
+        iAcessoBioCamera.onSuccessCamera(ResultCamera(result));
+      }else{
+        iAcessoBioCamera.onErrorCamera(ErrorBio(result));
+      }
+
     }
 
   }
@@ -241,13 +265,14 @@ class AcessoBio {
       "DOCUMENT_TYPE":DOCUMENT_TYPE
     });
 
-    if(result["flutterstatus"]){
-      result.remove("flutterstatus");
-      iAcessoBioCamera.onSucessDocumentInsert(result["processId"],result["typed"]);
+    if(validResult(result)){
 
-    }else{
-      result.remove("flutterstatus");
-      iAcessoBioCamera.onErrorDocumentInsert(result["result"]);
+      if(result["flutterstatus"] == 1){
+        iAcessoBioCamera.onSucessDocumentInsert(result["processId"],result["typed"]);
+      }else{
+        iAcessoBioCamera.onErrorDocumentInsert(result["result"]);
+      }
+
     }
 
   }

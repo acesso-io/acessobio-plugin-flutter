@@ -1,6 +1,6 @@
 
-import 'ErrorBio.dart';
-import 'ResultCamera.dart';
+import '../result/error/ErrorBio.dart';
+import '../result/success/ResultCamera.dart';
 
 abstract class IAcessoBioCamera {
   void onSuccessCamera(ResultCamera result);

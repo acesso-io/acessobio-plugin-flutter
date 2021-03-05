@@ -1,6 +1,7 @@
-import 'OCRResponse.dart';
-import 'ResultCameraDocument.dart';
-import 'ResultFacematch.dart';
+
+import '../result/success/OCRResponse.dart';
+import '../result/success/ResultCameraDocument.dart';
+import '../result/success/ResultFacematch.dart';
 
 
 abstract class IAcessoBioDocument {

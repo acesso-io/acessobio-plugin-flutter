@@ -105,13 +105,6 @@ class AcessoBioDocument : AcessoBio(), iAcessoBioDocument {
         onError(error)
     }
 
-    override fun userClosedCameraManually() {
-        TODO("Not yet implemented")
-    }
-
-
-
-
 
 
 }

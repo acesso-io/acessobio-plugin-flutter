@@ -1,5 +1,5 @@
-import 'ErrorBio.dart';
-import 'ResultAuthenticate.dart';
+import '../result/error/ErrorBio.dart';
+import '../result/success/ResultAuthenticate.dart';
 
 abstract class IAcessoBioAuthenticate
 {

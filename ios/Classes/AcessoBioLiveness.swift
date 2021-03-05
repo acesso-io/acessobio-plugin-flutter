@@ -5,7 +5,7 @@
 //  Created by Lucas Diniz Silva on 22/02/21.
 //
 
-class AcessoBioLiveness: AcessoBioView, AcessoBioDelegate{
+class AcessoBioLiveness: AcessoBioView {
     
     override func callMethodBio(){
         switch method {
@@ -32,20 +32,22 @@ class AcessoBioLiveness: AcessoBioView, AcessoBioDelegate{
     
     
     func onSuccesLivenessX(_ result: LivenessXResult!) {
-        flutterResult(convertObjToDicionary(result: result, status: true))
+        flutterResult(convertObjToDicionary(result: result, status: 1))
     }
     
     func onErrorLivenessX(_ error: String!) {
-        flutterResult(convertObjToDicionary(result: error, status: false))
+        flutterResult(convertObjToDicionary(result: error, status: 0))
     }
     
     func onSuccesCameraFace(_ result: CameraFaceResult!) {
-        flutterResult(convertObjToDicionary(result: result, status: true))
+        flutterResult(convertObjToDicionary(result: result, status: 1))
     }
     
     func onErrorCameraFace(_ error: String!) {
-        flutterResult(convertObjToDicionary(result: error, status: false))
+        flutterResult(convertObjToDicionary(result: error, status: 0))
     }
+    
+    
     
     
 

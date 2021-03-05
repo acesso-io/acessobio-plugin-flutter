@@ -38,9 +38,7 @@ class AcessoBioAuthenticate : AcessoBio(), iAcessoBioAuthenticate {
         onError(errorBio)
     }
 
-    override fun userClosedCameraManually() {
 
-    }
 
 
 }

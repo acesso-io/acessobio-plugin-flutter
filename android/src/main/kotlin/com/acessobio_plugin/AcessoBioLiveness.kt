@@ -41,10 +41,4 @@ class AcessoBioLiveness : AcessoBio(), iAcessoBioLiveness {
         onError(errorBio)
     }
 
-    override fun userClosedCameraManually() {
-        TODO("Not yet implemented")
-    }
-
-
-
 }
