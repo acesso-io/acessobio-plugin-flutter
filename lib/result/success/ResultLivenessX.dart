@@ -9,7 +9,7 @@ class ResultLivenessX {
     for(String nome in map.keys){
       if(nome == "base64"){
         base64 = map[nome];
-      }else if(nome == "processID"){
+      }else if(nome == "processID" || nome == "processId" ){
         processID = map[nome];
       }else if(nome == "log"){
         log = map[nome];
