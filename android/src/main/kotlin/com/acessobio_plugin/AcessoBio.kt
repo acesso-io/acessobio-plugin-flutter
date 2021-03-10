@@ -22,6 +22,20 @@ abstract class AcessoBio : AppCompatActivity(), iAcessoBio {
     }
 
     lateinit var acessoBio: AcessoBio
+    private var acessoBioStatus: Boolean = true
+
+    private var setColorSilhoutte: String? = null
+    private var setColorBackground: String? = null
+    private var setColorBoxMessage: String? = null
+    private var setColorTextMessage: String? = null
+    private var setColorBackgroundPopupError: String? = null
+    private var setColorTextPopupError: String? = null
+    private var setColorBackgroundButtonPopupError: String? = null
+    private var setColorTextButtonPopupError: String? = null
+    private var setColorBackgroundTakePictureButton: String? = null
+    private var setColorIconTakePictureButton: String? = null
+    private var setColorBackgroundBottomDocument: String? = null
+    private var setColorTextBottomDocument: String? = null
 
     abstract fun callMethodBio()
 
@@ -36,14 +50,72 @@ abstract class AcessoBio : AppCompatActivity(), iAcessoBio {
                 intent.getStringExtra("authToken")
         )
 
-        //acessoBio.setColorBackground()
+        getColors()
+        setColors()
 
         if (!getPermission()) {
             getPermission()
         } else {
-            callMethodBio()
+            if(acessoBioStatus){
+                callMethodBio()
+            }
         }
 
+    }
+
+    private fun setColors() {
+        if(setColorSilhoutte != "" && setColorSilhoutte != null){
+            val strs = setColorSilhoutte!!.split(";").toTypedArray()
+            acessoBio.setColorSilhoutte(strs[0],strs[1])
+        }
+        if(setColorBackground != "" && setColorBackground != null){
+            acessoBio.setColorBackground(setColorBackground)
+        }
+        if(setColorBoxMessage != "" && setColorBoxMessage != null){
+            acessoBio.setColorBoxMessage(setColorBoxMessage)
+        }
+        if(setColorTextMessage != "" && setColorTextMessage != null){
+            acessoBio.setColorTextMessage(setColorTextMessage)
+        }
+        if(setColorBackgroundPopupError != "" && setColorBackgroundPopupError != null){
+            acessoBio.setColorBackgroundPopupError(setColorBackgroundPopupError)
+        }
+        if(setColorTextPopupError != "" && setColorTextPopupError != null){
+            acessoBio.setColorTextPopupError(setColorTextPopupError)
+        }
+        if(setColorBackgroundButtonPopupError != "" && setColorBackgroundButtonPopupError != null){
+            acessoBio.setColorBackgroundButtonPopupError(setColorBackgroundButtonPopupError)
+        }
+        if(setColorTextButtonPopupError != "" && setColorTextButtonPopupError != null){
+            acessoBio.setColorTextButtonPopupError(setColorTextButtonPopupError)
+        }
+        if(setColorBackgroundTakePictureButton != "" && setColorBackgroundTakePictureButton != null){
+            acessoBio.setColorBackgroundTakePictureButton(setColorBackgroundTakePictureButton)
+        }
+        if(setColorIconTakePictureButton != "" && setColorIconTakePictureButton != null){
+            acessoBio.setColorIconTakePictureButton(setColorIconTakePictureButton)
+        }
+        if(setColorBackgroundBottomDocument != "" && setColorBackgroundBottomDocument != null){
+            acessoBio.setColorBackgroundBottomDocument(setColorBackgroundBottomDocument)
+        }
+        if(setColorTextBottomDocument != "" && setColorTextBottomDocument != null){
+            acessoBio.setColorTextBottomDocument(setColorTextBottomDocument)
+        }
+    }
+
+    private fun getColors() {
+        setColorSilhoutte = intent.getStringExtra("setColorSilhoutte")
+        setColorBackground = intent.getStringExtra("setColorBackground")
+        setColorBoxMessage = intent.getStringExtra("setColorBoxMessage")
+        setColorTextMessage = intent.getStringExtra("setColorTextMessage")
+        setColorBackgroundPopupError = intent.getStringExtra("setColorBackgroundPopupError")
+        setColorTextPopupError = intent.getStringExtra("setColorTextPopupError")
+        setColorBackgroundButtonPopupError = intent.getStringExtra("setColorBackgroundButtonPopupError")
+        setColorTextButtonPopupError = intent.getStringExtra("setColorTextButtonPopupError")
+        setColorBackgroundTakePictureButton = intent.getStringExtra("setColorBackgroundTakePictureButton")
+        setColorIconTakePictureButton = intent.getStringExtra("setColorIconTakePictureButton")
+        setColorBackgroundBottomDocument = intent.getStringExtra("setColorBackgroundBottomDocument")
+        setColorTextBottomDocument = intent.getStringExtra("setColorTextBottomDocument")
     }
 
     fun setPluginContext(context: AcessobioPlugin) {
@@ -70,6 +142,7 @@ abstract class AcessoBio : AppCompatActivity(), iAcessoBio {
                 apikey,
                 authToken
         )
+        acessoBio.setLanguageOrigin(AcessoBio.LanguageOrigin.FLUTTER,"")
     }
 
     //SUCCESS
@@ -146,6 +219,7 @@ abstract class AcessoBio : AppCompatActivity(), iAcessoBio {
 
     //ERROR AcessoBio
     override fun onErrorAcessoBio(errorBio: ErrorBio?) {
+        acessoBioStatus = false
         if(pluginContext != null){
             if(errorBio != null){
                 pluginContext!!.onErrorPluginAcessoBio(errorBio)

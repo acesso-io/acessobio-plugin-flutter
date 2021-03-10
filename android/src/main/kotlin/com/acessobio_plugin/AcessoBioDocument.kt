@@ -2,7 +2,6 @@ package com.acessobio_plugin
 
 import com.acesso.acessobio_android.iAcessoBioDocument
 import com.acesso.acessobio_android.services.dto.OCRResponse
-import com.acesso.acessobio_android.services.dto.ResultFaceMatch
 
 class AcessoBioDocument : AcessoBio(), iAcessoBioDocument {
 
@@ -63,8 +62,8 @@ class AcessoBioDocument : AcessoBio(), iAcessoBioDocument {
         onError(error)
     }
 
-    override fun onSucessFaceMatch(resultFaceMatch: ResultFaceMatch?) {
-        onSuccess(resultFaceMatch)
+    override fun onSucessFaceMatch(status: Boolean) {
+        onSuccess(status)
     }
 
     override fun onErrorFaceMatch(error: String?) {
@@ -74,6 +73,8 @@ class AcessoBioDocument : AcessoBio(), iAcessoBioDocument {
     override fun onSuccesstDocument(base64: String?) {
         onSuccess(base64)
     }
+
+
 
     override fun onErrorDocument(error: String?) {
         onError(error)

@@ -13,6 +13,11 @@ import 'result/success/ResultFacematch.dart';
 import 'result/success/ResultLivenessX.dart';
 import 'result/error/ErrorBio.dart';
 
+import 'package:path/path.dart';
+// import 'package:yaml/yaml.dart';
+import 'dart:io';
+
+
 class AcessoBio {
 
   static const MethodChannel _channel = const MethodChannel('acessobio');
@@ -30,6 +35,32 @@ class AcessoBio {
   IAcessoBioDocument iAcessoBioDocument;
   IAcessoBioLiveness iAcessoBioLiveness;
   IAcessoBioAuthenticate iAcessoBioAuthenticate;
+
+  //Android custom layout
+  String androidColorSilhoutte = null;
+  String androidColorBackground = null;
+  String androidColorBoxMessage = null;
+  String androidColorTextMessage = null;
+  String androidColorBackgroundPopupError = null;
+  String androidColorTextPopupError = null;
+  String androidColorBackgroundButtonPopupError = null;
+  String androidColorTextButtonPopupError = null;
+  String androidColorBackgroundTakePictureButton = null;
+  String androidColorIconTakePictureButton = null;
+  String androidColorBackgroundBottomDocument = null;
+  String androidColorTextBottomDocument = null;
+
+  //IOS cuscum layout
+  String iosColorSilhoutteNeutra = null;
+  String iosColorSilhoutteSuccess = null;
+  String iosColorSilhoutteError = null;
+  String iosColorBackground = null;
+  String iosColorBackgroundBoxStatus = null;
+  String iosColorTextBoxStatus = null;
+  String iosColorBackgroundPopupError = null;
+  String iosColorTextPopupError = null;
+  String iosImageIconPopupError = null;
+
 
   AcessoBio(IAcessoBio context, String urlIntance, String apikey, String authToken){
 
@@ -74,15 +105,48 @@ class AcessoBio {
 
   }
 
+  Map<dynamic, dynamic> buildMap(){
+
+   var map = <dynamic, dynamic>{
+     "urlIntance":_urlIntance,
+     "apikey":_apikey,
+     "authToken":_authToken,
+
+     //Android custom layout
+     "setAndroidColorSilhoutte": androidColorSilhoutte,
+     "setAndroidColorBackground": androidColorBackground,
+     "setAndroidColorBoxMessage": androidColorBoxMessage,
+     "setAndroidColorTextMessage": androidColorTextMessage,
+     "setAndroidColorBackgroundPopupError": androidColorBackgroundPopupError,
+     "setAndroidColorTextPopupError": androidColorTextPopupError,
+     "setAndroidColorBackgroundButtonPopupError": androidColorBackgroundButtonPopupError,
+     "setAndroidColorTextButtonPopupError": androidColorTextButtonPopupError,
+     "setAndroidColorBackgroundTakePictureButton": androidColorBackgroundTakePictureButton,
+     "setAndroidColorIconTakePictureButton": androidColorIconTakePictureButton,
+     "setAndroidColorBackgroundBottomDocument": androidColorBackgroundBottomDocument,
+     "setAndroidColorTextBottomDocument": androidColorTextBottomDocument,
+
+     //Ios custom layout
+     "setIosColorSilhoutteNeutra": iosColorSilhoutteNeutra,
+     "setIosColorSilhoutteSuccess": iosColorSilhoutteSuccess,
+     "setIosColorSilhoutteError": iosColorSilhoutteError,
+     "setIosColorBackground": iosColorBackground,
+     "setIosColorBackgroundBoxStatus": iosColorBackgroundBoxStatus,
+     "setIosColorTextBoxStatus": iosColorTextBoxStatus,
+     "setIosColorBackgroundPopupError": iosColorBackgroundPopupError,
+     "setIosColorTextPopupError": iosColorTextPopupError,
+     "setIosImageIconPopupError": iosImageIconPopupError
+
+   };
+
+    return map;
+
+  }
 
   //region LIVENESS
   get openLiveness async {
 
-    final Map<dynamic, dynamic> result = await _channel.invokeMethod('openLiveness',{
-      "urlIntance":_urlIntance,
-      "apikey":_apikey,
-      "authToken":_authToken
-    });
+    final Map<dynamic, dynamic> result = await _channel.invokeMethod('openLiveness',buildMap());
 
     if(validResult(result)) {
 
@@ -98,13 +162,14 @@ class AcessoBio {
   }
 
   void openLivenessWithCreateProcess(String name, String document) async {
-    final Map<dynamic, dynamic> result = await _channel.invokeMethod('openLivenessWithCreateProcess',{
-      "urlIntance":_urlIntance,
-      "apikey":_apikey,
-      "authToken":_authToken,
-      "name":name,
-      "document":document
-    });
+
+    var map = buildMap();
+
+    map["name"] = name;
+    map["document"] = document;
+
+
+    final Map<dynamic, dynamic> result = await _channel.invokeMethod('openLivenessWithCreateProcess',map);
 
     if(validResult(result)){
 
@@ -123,12 +188,12 @@ class AcessoBio {
   //region DOCUMENT
 
   void openCameraDocumentOCR(int DOCUMENT_TYPE) async {
-    final Map<dynamic, dynamic> result = await _channel.invokeMethod('openCameraDocumentOCR',{
-      "urlIntance":_urlIntance,
-      "apikey":_apikey,
-      "authToken":_authToken,
-      "DOCUMENT_TYPE":DOCUMENT_TYPE
-    });
+
+    var map = buildMap();
+
+    map["DOCUMENT_TYPE"] = DOCUMENT_TYPE;
+
+    final Map<dynamic, dynamic> result = await _channel.invokeMethod('openCameraDocumentOCR',map);
 
     if(validResult(result)){
 
@@ -143,12 +208,12 @@ class AcessoBio {
   }
 
   void openFaceMatch(int DOCUMENT_TYPE) async {
-    final Map<dynamic, dynamic> result = await _channel.invokeMethod('openFaceMatch',{
-      "urlIntance":_urlIntance,
-      "apikey":_apikey,
-      "authToken":_authToken,
-      "DOCUMENT_TYPE":DOCUMENT_TYPE
-    });
+
+    var map = buildMap();
+
+    map["DOCUMENT_TYPE"] = DOCUMENT_TYPE;
+
+    final Map<dynamic, dynamic> result = await _channel.invokeMethod('openFaceMatch',map);
 
     if(validResult(result)){
 
@@ -163,12 +228,12 @@ class AcessoBio {
   }
 
   void openCameraDocument(int DOCUMENT_TYPE) async {
-    final Map<dynamic, dynamic> result = await _channel.invokeMethod('openCameraDocument',{
-      "urlIntance":_urlIntance,
-      "apikey":_apikey,
-      "authToken":_authToken,
-      "DOCUMENT_TYPE":DOCUMENT_TYPE
-    });
+
+    var map = buildMap();
+
+    map["DOCUMENT_TYPE"] = DOCUMENT_TYPE;
+
+    final Map<dynamic, dynamic> result = await _channel.invokeMethod('openCameraDocument',map);
 
     if(validResult(result)){
 
@@ -187,12 +252,12 @@ class AcessoBio {
   //region AUTH
 
   void openLivenessAuthenticate(String code) async {
-    final Map<dynamic, dynamic> result = await _channel.invokeMethod('openLivenessAuthenticate',{
-      "urlIntance":_urlIntance,
-      "apikey":_apikey,
-      "authToken":_authToken,
-      "code":code
-    });
+
+    var map = buildMap();
+
+    map["code"] = code;
+
+    final Map<dynamic, dynamic> result = await _channel.invokeMethod('openLivenessAuthenticate',map);
 
     if(validResult(result)){
 
@@ -211,11 +276,8 @@ class AcessoBio {
   //region CAMERA
 
   get openCamera async {
-    final Map<dynamic, dynamic> result = await _channel.invokeMethod('openCamera',{
-      "urlIntance":_urlIntance,
-      "apikey":_apikey,
-      "authToken":_authToken
-    });
+
+    final Map<dynamic, dynamic> result = await _channel.invokeMethod('openCamera',buildMap());
 
     if(validResult(result)){
 
@@ -231,17 +293,16 @@ class AcessoBio {
   }
 
   void openCameraWithCreateProcess(String nome, String code, String gender, String birthdate, String email, String phone ) async {
-    final Map<dynamic, dynamic> result = await _channel.invokeMethod('openCameraWithCreateProcess',{
-      "urlIntance":_urlIntance,
-      "apikey":_apikey,
-      "authToken":_authToken,
-      "nome":nome,
-      "code":code,
-      "gender":gender,
-      "birthdate":birthdate,
-      "email":email,
-      "phone":phone
-    });
+
+    var map = buildMap();
+    map["nome"] = nome;
+    map["code"] = code;
+    map["gender"] = gender;
+    map["birthdate"] = birthdate;
+    map["email"] = email;
+    map["phone"] = phone;
+
+    final Map<dynamic, dynamic> result = await _channel.invokeMethod('openCameraWithCreateProcess',map);
 
     if(validResult(result)){
 
@@ -256,14 +317,13 @@ class AcessoBio {
   }
 
   void openCameraWithCreateProcessAndInsertDocument(String code, String nome, int DOCUMENT_TYPE) async {
-    final Map<dynamic, dynamic> result = await _channel.invokeMethod('openCameraInsertDocument',{
-      "urlIntance":_urlIntance,
-      "apikey":_apikey,
-      "authToken":_authToken,
-      "code":code,
-      "nome":nome,
-      "DOCUMENT_TYPE":DOCUMENT_TYPE
-    });
+
+    var map = buildMap();
+    map["code"] = code;
+    map["nome"] = nome;
+    map["DOCUMENT_TYPE"] = DOCUMENT_TYPE;
+
+    final Map<dynamic, dynamic> result = await _channel.invokeMethod('openCameraInsertDocument',map);
 
     if(validResult(result)){
 
@@ -279,34 +339,37 @@ class AcessoBio {
 
   //endregion
 
- //region COSTOMIZATION
+  //region COSTOMIZATION
 
-  void setColorSilhoutte(String success_stroke_color,  String error_stroke_color){}
+  //region Android
+  void setAndroidColorSilhoutte(String success_stroke_color,  String error_stroke_color){androidColorSilhoutte = success_stroke_color+";"+success_stroke_color;}
+  void setAndroidColorBackground( String colorBlueMask){androidColorBackground = colorBlueMask;}
+  void setAndroidColorBoxMessage( String colorWhite){ androidColorBoxMessage = colorWhite;}
+  void setAndroidColorTextMessage( String colorBlack){androidColorTextMessage = colorBlack;}
+  void setAndroidColorBackgroundPopupError( String colorAccent){ androidColorBackgroundPopupError = colorAccent;}
+  void setAndroidColorTextPopupError( String colorGreen){androidColorTextPopupError = colorGreen;}
+  void setAndroidColorBackgroundButtonPopupError( String red_btn_bg_color){androidColorBackgroundButtonPopupError = red_btn_bg_color;}
+  void setAndroidColorTextButtonPopupError( String colorPrimary){androidColorTextButtonPopupError = colorPrimary;}
+  void setAndroidColorBackgroundTakePictureButton( String colorGreyDark){androidColorBackgroundTakePictureButton = colorGreyDark;}
+  void setAndroidColorIconTakePictureButton( String colorOrange){androidColorIconTakePictureButton = colorOrange;}
+  void setAndroidColorBackgroundBottomDocument( String red_btn_bg_color){androidColorBackgroundBottomDocument = red_btn_bg_color;}
+  void setAndroidColorTextBottomDocument( String colorGreen){androidColorTextBottomDocument = colorGreen;}
+  //endregion
 
-  void setColorBackground( String colorBlueMask){}
-
-  void setColorBoxMessage( String colorWhite){}
-
-  void setColorTextMessage( String colorBlack){}
-
-  void setColorBackgroundPopupError( String colorAccent){}
-
-  void setColorTextPopupError( String colorGreen){}
-
-  void setColorBackgroundButtonPopupError( String red_btn_bg_color){}
-
-  void setColorTextButtonPopupError( String colorPrimary){}
-
-  void setColorBackgroundTakePictureButton( String colorGreyDark){}
-
-  void setColorIconTakePictureButton( String colorOrange){}
-
-  void setColorBackgroundBottomDocument( String red_btn_bg_color){}
-
-  void setColorTextBottomDocument( String colorGreen){}
-
-  void setImageIconPopupError( String ivPopupError){}
+  //region IOS
+  void setIosColorSilhoutteNeutra(String color ){iosColorSilhoutteNeutra = color;}
+  void setIosColorSilhoutteSuccess(String color ){iosColorSilhoutteSuccess = color;}
+  void setIosColorSilhoutteError(String color ){iosColorSilhoutteError = color;}
+  void setIosColorBackground(String color ){iosColorBackground = color;}
+  void setIosColorBackgroundBoxStatus(String color ){iosColorBackgroundBoxStatus = color;}
+  void setIosColorTextBoxStatus(String color ){iosColorTextBoxStatus = color;}
+  void setIosColorBackgroundPopupError(String color ){iosColorBackgroundPopupError = color;}
+  void setIosColorTextPopupError(String color ){iosColorTextPopupError = color;}
+  void setIosImageIconPopupError(String color ){iosImageIconPopupError = color;}
+  //endregion
 
  //endregion
+
+
 
 }

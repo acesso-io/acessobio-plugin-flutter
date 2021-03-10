@@ -23,6 +23,19 @@ class AcessobioPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
   private lateinit var apikey : String
   private lateinit var authToken : String
 
+  private var setColorSilhoutte: String? = null
+  private var setColorBackground: String? = null
+  private var setColorBoxMessage: String? = null
+  private var setColorTextMessage: String? = null
+  private var setColorBackgroundPopupError: String? = null
+  private var setColorTextPopupError: String? = null
+  private var setColorBackgroundButtonPopupError: String? = null
+  private var setColorTextButtonPopupError: String? = null
+  private var setColorBackgroundTakePictureButton: String? = null
+  private var setColorIconTakePictureButton: String? = null
+  private var setColorBackgroundBottomDocument: String? = null
+  private var setColorTextBottomDocument: String? = null
+
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
     channel = MethodChannel(flutterPluginBinding.binaryMessenger, "acessobio")
     channel.setMethodCallHandler(this)
@@ -32,6 +45,7 @@ class AcessobioPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     this.result = result
 
     validKeys(call.argument("urlIntance"), call.argument("apikey"), call.argument("authToken"))
+    getColors(call)
 
     when(call.method){
 
@@ -155,6 +169,36 @@ class AcessobioPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
 
   //endregion
 
+  private fun getColors(call: MethodCall) {
+    setColorSilhoutte = call.argument("setAndroidColorSilhoutte")
+    setColorBackground = call.argument("setAndroidColorBackground")
+    setColorBoxMessage = call.argument("setAndroidColorBoxMessage")
+    setColorTextMessage = call.argument("setAndroidColorTextMessage")
+    setColorBackgroundPopupError = call.argument("setAndroidColorBackgroundPopupError")
+    setColorTextPopupError = call.argument("setAndroidColorTextPopupError")
+    setColorBackgroundButtonPopupError = call.argument("setAndroidColorBackgroundButtonPopupError")
+    setColorTextButtonPopupError = call.argument("setAndroidColorTextButtonPopupError")
+    setColorBackgroundTakePictureButton = call.argument("setAndroidColorBackgroundTakePictureButton")
+    setColorIconTakePictureButton = call.argument("setAndroidColorIconTakePictureButton")
+    setColorBackgroundBottomDocument = call.argument("setAndroidColorBackgroundBottomDocument")
+    setColorTextBottomDocument = call.argument("setAndroidColorTextBottomDocument")
+  }
+  private fun setColors(intent: Intent): Intent {
+    intent.putExtra("setColorSilhoutte",setColorSilhoutte)
+    intent.putExtra("setColorBackground",setColorBackground)
+    intent.putExtra("setColorBoxMessage",setColorBoxMessage)
+    intent.putExtra("setColorTextMessage",setColorTextMessage)
+    intent.putExtra("setColorBackgroundPopupError",setColorBackgroundPopupError)
+    intent.putExtra("setColorTextPopupError",setColorTextPopupError)
+    intent.putExtra("setColorBackgroundButtonPopupError",setColorBackgroundButtonPopupError)
+    intent.putExtra("setColorTextButtonPopupError",setColorTextButtonPopupError)
+    intent.putExtra("setColorBackgroundTakePictureButton",setColorBackgroundTakePictureButton)
+    intent.putExtra("setColorIconTakePictureButton",setColorIconTakePictureButton)
+    intent.putExtra("setColorBackgroundBottomDocument",setColorBackgroundBottomDocument)
+    intent.putExtra("setColorTextBottomDocument",setColorTextBottomDocument)
+
+    return intent
+  }
   private fun getIntent(acessoBio: AcessoBio, methodCall: String): Intent {
 
     acessoBio.setPluginContext(this)
@@ -166,7 +210,8 @@ class AcessobioPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     intent.putExtra("authToken",authToken)
     intent.putExtra("methodCall",methodCall)
 
-    return intent
+
+    return setColors(intent)
 
   }
   private fun validKeys(urlIntance: String?, apikey: String?, authToken: String?) {
@@ -213,7 +258,7 @@ class AcessobioPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
 
   //ERROR ACESSOBIO
   fun onErrorPluginAcessoBio(error: Any) {
-    result.success(convertObjToMapReflection(error, 0))//Status false pq vem do onError
+    result.success(convertObjToMapReflection(error, 2))//Status false pq vem do onError
   }
 
   fun userClosedCameraManually() {

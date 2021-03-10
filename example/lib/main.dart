@@ -27,7 +27,7 @@ class MyApp extends StatefulWidget  {
 
 class _MyAppState extends State<MyApp> implements IAcessoBio, IAcessoBioCamera, IAcessoBioDocument, IAcessoBioLiveness, IAcessoBioAuthenticate {
 
-  String _platformVersion;
+  String _result;
 
   @override
   void initState() {
@@ -36,17 +36,43 @@ class _MyAppState extends State<MyApp> implements IAcessoBio, IAcessoBioCamera, 
 
   Future<void> initPlatformState() async {
 
-    String platformVersion = "Esta biblioteca visa implementar a tecnologia Unico";
+    String result = "Esta biblioteca visa implementar a tecnologia Unico";
 
     //Inicialmente, para utilizar a tecnologia implemente a classe Acessobio.
     //Implementar construtor de acordo com a tecnologia que ira utilizar
-
     AcessoBio acessobio = new AcessoBio(
         this,
         acessoPass.url,
         acessoPass.apikey,
         acessoPass.token
     );
+
+
+    // --- CUSTOM LAYOUT Android
+    // acessobio.setAndroidColorSilhoutte("#87CEFA","#87CEFA");
+    // acessobio.setAndroidColorBackground("#901850");
+    // acessobio.setAndroidColorBoxMessage("#901850");
+    // acessobio.setAndroidColorTextMessage("#901850");
+    // acessobio.setAndroidColorBackgroundPopupError("#901850");
+    // acessobio.setAndroidColorTextPopupError("#901850");
+    // acessobio.setAndroidColorBackgroundButtonPopupError("#901850");
+    // acessobio.setAndroidColorTextButtonPopupError("#901850");
+    // acessobio.setAndroidColorBackgroundTakePictureButton("#901850");
+    // acessobio.setAndroidColorIconTakePictureButton("#901850");
+    // acessobio.setAndroidColorBackgroundBottomDocument("#901850");
+    // acessobio.setAndroidColorTextBottomDocument("#901850");
+
+    // --- CUSTOM LAYOUT IOS
+    // acessobio.setIosColorSilhoutteNeutra("#901850");
+    // acessobio.setIosColorSilhoutteSuccess("#901850");
+    // acessobio.setIosColorSilhoutteError("#901850");
+    // acessobio.setIosColorBackground("#901850");
+    // acessobio.setIosColorBackgroundBoxStatus("#901850");
+    // acessobio.setIosColorTextBoxStatus("#901850");
+    // acessobio.setIosColorBackgroundPopupError("#901850");
+    // acessobio.setIosColorTextPopupError("#901850");
+    // acessobio.setIosImageIconPopupError("#901850");
+
 
     //  --- LIVENESS ---
     acessobio.openLiveness;
@@ -80,7 +106,7 @@ class _MyAppState extends State<MyApp> implements IAcessoBio, IAcessoBioCamera, 
           title: const Text('Plugin example app unico'),
         ),
         body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+          child: Text('Running on: $_result\n'),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: initPlatformState,

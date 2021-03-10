@@ -1,5 +1,5 @@
 PODS:
-  - AcessoBio (1.2.1.1)
+  - AcessoBio (1.2.2)
   - acessobio_plugin (0.0.1):
     - AcessoBio
     - Flutter
@@ -19,10 +19,10 @@ EXTERNAL SOURCES:
     :path: Flutter
 
 SPEC CHECKSUMS:
-  AcessoBio: b31bd3781bbcfb7e9d3fc0b30b6ec57835c30a74
+  AcessoBio: 2e550e39ed11cd4bf7c807d1d7a3a393d20e6222
   acessobio_plugin: aeb47f0315ef5066d610570a5009e62d928ea5f8
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
 
-PODFILE CHECKSUM: a93fd8fd313f9644b281ca2ec2823b8244ae8e38
+PODFILE CHECKSUM: 66af994b57623af5a8a2353283632e542d4ca830
 
 COCOAPODS: 1.10.0
