@@ -142,7 +142,7 @@ abstract class AcessoBio : AppCompatActivity(), iAcessoBio {
                 apikey,
                 authToken
         )
-        acessoBio.setLanguageOrigin(AcessoBio.LanguageOrigin.FLUTTER,"")
+        acessoBio.setLanguageOrigin(AcessoBio.LanguageOrigin.FLUTTER,"0.1.1")
     }
 
     //SUCCESS

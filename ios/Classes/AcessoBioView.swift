@@ -56,7 +56,7 @@ class AcessoBioView: UIViewController, AcessoBioDelegate {
             apikey: apikey,
             token:authToken
         );
-        acessoBioManager.setLanguageOrigin(LanguageOrigin.Flutter, release: "")
+        acessoBioManager.setLanguageOrigin(LanguageOrigin.Flutter, release: "0.1.1")
     }
     
     private func setColors(){
