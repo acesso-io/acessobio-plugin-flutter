@@ -15,6 +15,8 @@ class ErrorBio {
         method = map[nome];
       }else if(nome == "description"){
         description = map[nome];
+      }else if(nome == "result"){
+        description = map[nome];
       }
     }
 

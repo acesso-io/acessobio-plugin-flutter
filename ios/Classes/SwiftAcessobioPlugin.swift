@@ -6,9 +6,20 @@ import UIKit
 public class SwiftAcessobioPlugin: NSObject, FlutterPlugin {
     
     var result: FlutterResult!
+    
     var urlIntance: String = ""
     var apikey: String = ""
     var authToken: String = ""
+    
+    var setIosColorSilhoutteNeutra: String? = nil
+    var setIosColorSilhoutteSuccess: String? = nil
+    var setIosColorSilhoutteError: String? = nil
+    var setIosColorBackground: String? = nil
+    var setIosColorBackgroundBoxStatus: String? = nil
+    var setIosColorTextBoxStatus: String? = nil
+    var setIosColorBackgroundPopupError: String? = nil
+    var setIosColorTextPopupError: String? = nil
+    var setIosImageIconPopupError: String? = nil
     
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "acessobio", binaryMessenger: registrar.messenger())
@@ -29,6 +40,7 @@ public class SwiftAcessobioPlugin: NSObject, FlutterPlugin {
             apikey: argument!["apikey"] as? String,
             authToken: argument!["authToken"] as? String
         )
+        getColors(call:call)
            
         switch call.method {
             //Liveness
@@ -69,12 +81,24 @@ public class SwiftAcessobioPlugin: NSObject, FlutterPlugin {
         
         acessoBioView.flutterResult = result
         acessoBioView.method = method
+        
         acessoBioView.urlIntance = self.urlIntance
         acessoBioView.apikey = self.apikey
         acessoBioView.authToken = self.authToken
         
+        acessoBioView.setColorSilhoutteNeutra = self.setIosColorSilhoutteNeutra
+        acessoBioView.setColorSilhoutteSuccess = self.setIosColorSilhoutteSuccess
+        acessoBioView.setColorSilhoutteError = self.setIosColorSilhoutteError
+        acessoBioView.setColorBackground = self.setIosColorBackground
+        acessoBioView.setColorBackgroundBoxStatus = self.setIosColorBackgroundBoxStatus
+        acessoBioView.setColorTextBoxStatus = self.setIosColorTextBoxStatus
+        acessoBioView.setColorBackgroundPopupError = self.setIosColorBackgroundPopupError
+        acessoBioView.setColorTextPopupError = self.setIosColorTextPopupError
+        acessoBioView.setImageIconPopupError = self.setIosImageIconPopupError
+        
         return acessoBioView
     }
+    
     private func initView(acessoBioView:AcessoBioView ){
         let nav = UINavigationController(rootViewController: acessoBioView)
         nav.setNavigationBarHidden(false, animated: false)
@@ -95,6 +119,21 @@ public class SwiftAcessobioPlugin: NSObject, FlutterPlugin {
         if(authToken != nil && authToken != "" ){
             self.authToken = authToken!
         }else{self.result(FlutterError.init(code: "bad args authToken", message: nil, details: nil))}
+        
+    }
+    private func getColors(call: FlutterMethodCall){
+        
+        let argument = call.arguments as? Dictionary<String, Any>
+        
+        setIosColorSilhoutteNeutra = argument!["setIosColorSilhoutteNeutra"] as? String
+        setIosColorSilhoutteSuccess = argument!["setIosColorSilhoutteSuccess"] as? String
+        setIosColorSilhoutteError = argument!["setIosColorSilhoutteError"] as? String
+        setIosColorBackground = argument!["setIosColorBackground"] as? String
+        setIosColorBackgroundBoxStatus = argument!["setIosColorBackgroundBoxStatus"] as? String
+        setIosColorTextBoxStatus = argument!["setIosColorTextBoxStatus"] as? String
+        setIosColorBackgroundPopupError = argument!["setIosColorBackgroundPopupError"] as? String
+        setIosColorTextPopupError = argument!["setIosColorTextPopupError"] as? String
+        setIosImageIconPopupError = argument!["setIosImageIconPopupError"] as? String
         
     }
     
@@ -131,7 +170,6 @@ public class SwiftAcessobioPlugin: NSObject, FlutterPlugin {
         
         initView(acessoBioView: view)
     }
-    
     
     //Auth
     private func openLivenessAuthenticate(method: String, code: String?){
