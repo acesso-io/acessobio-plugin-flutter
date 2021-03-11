@@ -31,8 +31,7 @@ target 'Runner' do
   use_frameworks!
   use_modular_headers!
 
-#  pod ‘AcessoBio’, :git => ‘https://github.com/acesso-io/acessobio-ios’
-  pod ‘AcessoBio’, :path => '/Users/ldsilva/Projects/xCodeProjects/acessobio-ios'
+    pod 'AcessoBio', :git => 'https://github.com/acesso-io/acessobio-ios', :tag => '1.2.2'
   
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end

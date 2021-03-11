@@ -45,10 +45,6 @@ android {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.2.0'
-
     implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'com.github.acesso-io:acessobio-android:1.1.18.2'
-//    implementation 'com.github.acesso-io:acessobio-android:1.1.18.1'
-//    implementation 'com.github.acesso-io:acessobio-android:cenario-flutterplugin-jitpack-teste-SNAPSHOT'
-
+    implementation 'com.github.acesso-io:acessobio-android:1.1.19'
 }

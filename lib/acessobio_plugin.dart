@@ -1,4 +1,3 @@
-
 import 'package:flutter/services.dart';
 import 'abstracts/IAcessoBio.dart';
 import 'abstracts/IAcessoBioAuthenticate.dart';
@@ -12,11 +11,6 @@ import 'result/success/ResultCameraDocument.dart';
 import 'result/success/ResultFacematch.dart';
 import 'result/success/ResultLivenessX.dart';
 import 'result/error/ErrorBio.dart';
-
-import 'package:path/path.dart';
-// import 'package:yaml/yaml.dart';
-import 'dart:io';
-
 
 class AcessoBio {
 
